@@ -1,7 +1,10 @@
 CS471/571: Operating Systems Concepts Project
 Fall 2023, Old Dominion University
 Due:  December 03, 2023
-Charles Milroy, Ethan Landers
+
+Charles Milroy
+Ethan Landers
+
 Professor Nasreen Arif
 *********************************************
 
@@ -30,8 +33,6 @@ Statistics for the Run:
 
 Since there are only 500 processes, it may be easy to read all 500 processes data first (from datafile1-txt), and store the records in a queue in the program, and then process them. This is an easy way to do it. But you can choose any method you like.
 
+***How to Install and Run the Project
 
-Problem 2: Producer-Consumer Problem
-
-This follows the description in pages 253-257 of the 9th edition of the textbook. Develop the producer-consumer problem using Pthreads or Winn32 API or using any other library of your preference. You can code the program in any language of your choice. Test the program with several inputs (the three parameters to the main program are shown in the textbook). Definitely, test the following parameters. Try with different sleep times. Measure the performance of the time in terms of overall turnaround time. Tabulate your
-results along with the parameters used. Finally, summarize your results and give an explanation for the results.
+*** How to Use the Project
