@@ -3,22 +3,14 @@
 #include <string>
 #include <vector>
 
-#define int numOfProcesses = 500;
+#define numOfProcesses 500
 
 using namespace std;
 
-class CPU_Process{
+struct CPU_Process{
     int arrivalTime;
     int CPU_BurstLength;
-    int priority;
-
-    CPU_Process(int arrivalTime, int CPU_BurstLength, int priority){
-        arrivalTime = 0;
-        CPU_BurstLength = 0;
-        priority = 0;
-    }
-
-
+    int priority;  
 };
 
 void readData(){
@@ -30,7 +22,6 @@ void readData(){
     
     if(inFile.is_open()){
         // for(i=0; i<)     LOOP THROUGH FILE
-        inFile >> process->arrivalTime >> process->CPU_BurstLength >> process->priority;
         inFile.close();
     }
     else{
