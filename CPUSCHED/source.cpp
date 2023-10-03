@@ -3,13 +3,14 @@
 #include <string>
 #include <vector>
 
+#define int numOfProcesses = 500;
+
 using namespace std;
 
 class CPU_Process{
-    public:
-        int arrivalTime;
-        int CPU_BurstLength;
-        int priority;
+    int arrivalTime;
+    int CPU_BurstLength;
+    int priority;
 
     CPU_Process(int arrivalTime, int CPU_BurstLength, int priority){
         arrivalTime = 0;
@@ -20,17 +21,12 @@ class CPU_Process{
 
 };
 
-int main(){
-    readData();
-    return 0;
-}
-
 void readData(){
     //string inFileName = "datafile.txt"
     ifstream inFile;
     inFile.open("datafile.txt");
 
-    CPU_Process process[];
+    CPU_Process process[numOfProcesses];
     
     if(inFile.is_open()){
         // for(i=0; i<)     LOOP THROUGH FILE
@@ -54,4 +50,9 @@ void SJF(){
 
 void preemptivePriority(){
     
+}
+
+int main(){
+    readData();
+    return 0;
 }
