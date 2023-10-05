@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
+#include <queue>
 
 #define numOfProcesses 500
 
@@ -14,7 +14,6 @@ struct CPU_Process{
 };
 
 void readData(){
-    //string inFileName = "datafile.txt"
     ifstream inFile;
     string firstLine;
     inFile.open("datafile.txt");
@@ -23,7 +22,6 @@ void readData(){
     
     if(inFile.is_open()){
         getline(inFile, firstLine);
-        cout << firstLine;
         for(int i=0; i<numOfProcesses; i++){
             inFile >> process[i].arrivalTime >> process[i].CPU_BurstLength >> process[i].priority;
         }
@@ -32,27 +30,43 @@ void readData(){
     else{
         cerr << "Cannot find that input file." << endl;
     }
-    // // Testing output
+    // // Testing to make sure reading in from .txt was successful.
     // for(int i=0; i<numOfProcesses; i++){
+    //     cout << firstLine;
     //     cout << process[i].arrivalTime << "   " << process[i].CPU_BurstLength << "   " << process[i].priority << endl;
     // }
+    
 }
 
 void FIFO(){
-
-
+    queue<CPU_Process> q;
+    output();
 }
 
 void SJF(){
 
-
+    output();
 }
 
 void preemptivePriority(){
     
+    output();
+}
+
+void output(){
+    cout << "Statistics for the Run\n\n";
+    cout << "Number of processes: " << numOfProcesses << endl;
+    cout << "Total elapsed time (for the scheduler): " << endl;
+    cout << "Throughput (Number of processes executed in one unit " 
+            "of CPU burst time): " << endl;
+    cout << "CPU utilization: " << endl;
+    cout << "Average waiting time (in CPU burst times): " << endl;
+    cout << "Average turnaround time (in CPU burst times): " << endl;
+    cout << "Average response time (in CPU burst times): " << endl;
 }
 
 int main(){
     readData();
+    output();
     return 0;
 }
