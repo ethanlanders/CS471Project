@@ -8,98 +8,77 @@
 #include <condition_variable>
 // #include <random>
 
-using namespace std;
-std::mutex account; // mutex for critical section
-condition_variable cv;
-bool ready = false;   // Tell threads to run
-int loop[2] = {0, 0}; // current count
-int balance = 0;
-
-int update_balance(int amount)
-{
-    balance = balance + amount;
-    int updated = balance;
-    return updated;
-}
-
-int find_balance(int id)
-{
-    unique_lock<mutex> lock(account);
-    cv.wait(lock);
-    int updated = update_balance(0);
-    cout << "\nThread " << id << " Balance: $" << updated;
-    cv.notify_one();
-    return updated;
-}
-
-/* Changes ready to true, and begins the threads printing */
-void run()
-{
-    unique_lock<mutex> lock(account);
-    ready = true;
-    cv.notify_one();
-}
-
-/* Prints the thread id / max number of threads */
-void print_num(int id)
-{
-    while (loop[0] < 2 || loop[1] < 2)
-    {
-        if (loop[id] < 2)
-        {
-            find_balance(id);
-            loop[id]++;
-        }
-    }
-}
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+using namespace std;
+bool ready = false; // Tell threads to run
+std::mutex buf;     // mutex for critical section
+condition_variable cv;
 // Per textbook problem statement
+// #include "buffer.h"
 typedef int buffer_item;
 #define BUFFER_SIZE 5
 
 buffer_item buffer[BUFFER_SIZE];
 
 // buffer Functions
-int insert_item(buffer_item item)
+bool insert_item(buffer_item item)
 {
-    return 0;
+    unique_lock<mutex> lock(buf);
+    cv.wait(lock);
+    // Insert Item
+    cv.notify_one();
+    return false; // If successful
+    // return true;  // Indicating error
 }
 
-int remove_item(buffer_item *item)
+bool remove_item(buffer_item *item)
 {
-    return 0;
+    unique_lock<mutex> lock(buf);
+    cv.wait(lock);
+    // Remove Item
+    cv.notify_one();
+    return false; // If successful
+    // return true;  // Indicating error
 }
 
 // Threads Functions
-#include "buffer.h"
-void *producer()
+void producer()
 {
-    buffer item item;
+    buffer_item item;
     while (true)
     {
-        /* sleep for a random period of time */
-        sleep(...);
+        /* sleep for a random period of time from 0-5 seconds */
+        sleep(rand() % 5);
         /* generate a random number */
         item = rand();
         if (insert_item(item))
-            fprintf("report error condition");
+            cout << "report error condition";
         else
-            printf("producer produced %d\n", item);
+            cout << "producer produced " << item;
     }
 }
 
-void *consumer()
+void consumer()
 {
-    buffer item item;
+    buffer_item item;
     while (true)
     {
-        /* sleep for a random period of time */
-        sleep(...);
+        /* sleep for a random period of time from 0-5 seconds */
+        sleep(rand() % 5);
         if (remove_item(&item))
-            fprintf("report error condition");
+            cout << "report error condition";
         else
-            printf("consumer consumed %d\n", item);
+            cout << "consumer consumed " << item;
     }
+}
+
+/* Changes ready to true, and begins the threads printing */
+void run()
+{
+    unique_lock<mutex> lock(buf);
+    ready = true;
+    cv.notify_one();
 }
 
 int main(int argc, char *argv[])
@@ -112,15 +91,15 @@ int main(int argc, char *argv[])
     // Initialize Buffer
 
     // Create Producer and consumer threads
-    std::thread producer[producerNum];
-    std::thread consumer[consumerNum];
+    std::thread prod[producerNum];
+    std::thread cons[consumerNum];
 
     /* spawn producer threads */
     for (int id = 0; id < producerNum; id++)
-        producer[id] = std::thread(producer());
+        prod[id] = std::thread(producer);
     /* spawn consumer threads */
     for (int id = 0; id < producerNum; id++)
-        consumer[id] = std::thread(consumer());
+        cons[id] = std::thread(consumer);
 
     std::cout << "\nRunning " << producerNum;
     std::cout << " in parallel: \n"
@@ -132,10 +111,10 @@ int main(int argc, char *argv[])
     sleep(time);
     /* spawn producer threads */
     for (int id = 0; id < producerNum; id++)
-        producer[id].join();
+        prod[id].join();
     /* spawn consumer threads */
     for (int id = 0; id < producerNum; id++)
-        consumer[id].join();
+        cons[id].join();
 
     cout << "\n";
     return 0;
