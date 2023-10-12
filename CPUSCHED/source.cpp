@@ -13,13 +13,11 @@ struct CPU_Process{
     int priority;  
 };
 
-void readData(){
+void readData(CPU_Process process[]){
     ifstream inFile;
     string firstLine;
     inFile.open("datafile.txt");
 
-    CPU_Process process[numOfProcesses];
-    
     if(inFile.is_open()){
         getline(inFile, firstLine);
         for(int i=0; i<numOfProcesses; i++){
@@ -35,22 +33,6 @@ void readData(){
     //     cout << firstLine;
     //     cout << process[i].arrivalTime << "   " << process[i].CPU_BurstLength << "   " << process[i].priority << endl;
     // }
-    
-}
-
-void FIFO(){
-    queue<CPU_Process> q;
-    output();
-}
-
-void SJF(){
-    queue<CPU_Process> q;
-    output();
-}
-
-void preemptivePriority(){
-    queue<CPU_Process> q;
-    output();
 }
 
 void output(){
@@ -65,8 +47,31 @@ void output(){
     cout << "Average response time (in CPU burst times): " << endl;
 }
 
-int main(){
-    readData();
+void FIFO(queue<CPU_Process>& q, CPU_Process process[]){
     output();
+}
+
+void SJF(queue<CPU_Process>& q, CPU_Process process[]){
+    output();
+}
+
+void preemptivePriority(queue<CPU_Process>& q, CPU_Process process[]){
+    output();
+}
+
+int main(){
+    // Declare needed variables
+    queue<CPU_Process> q;
+    CPU_Process process[numOfProcesses];
+
+    // Read from input file
+    readData(process);
+    
+    FIFO(q, process);
+
+    // Test
+    for(int i=0; i<20; i++){
+        cout << process[i].arrivalTime << " " << process[i].CPU_BurstLength << " " << process[i].priority << endl;
+    }
     return 0;
 }
