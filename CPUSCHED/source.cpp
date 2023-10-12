@@ -44,12 +44,12 @@ void FIFO(){
 }
 
 void SJF(){
-
+    queue<CPU_Process> q;
     output();
 }
 
 void preemptivePriority(){
-    
+    queue<CPU_Process> q;
     output();
 }
 
