@@ -46,8 +46,12 @@ bool remove_item(buffer_item *item)
 void producer()
 {
     buffer_item item;
+    while (!ready)
+    {
+    };
     while (true)
     {
+        cout << "Producing";
         /* sleep for a random period of time from 0-5 seconds */
         sleep(rand() % 5);
         /* generate a random number */
@@ -62,8 +66,12 @@ void producer()
 void consumer()
 {
     buffer_item item;
+    while (!ready)
+    {
+    };
     while (true)
     {
+        cout << "Consuming";
         /* sleep for a random period of time from 0-5 seconds */
         sleep(rand() % 5);
         if (remove_item(&item))
@@ -74,11 +82,14 @@ void consumer()
 }
 
 /* Changes ready to true, and begins the threads printing */
-void run()
+void runThreads()
 {
+    cout << "At Run";
     unique_lock<mutex> lock(buf);
     ready = true;
     cv.notify_one();
+
+    cout << "After Run";
 }
 
 int main(int argc, char *argv[])
@@ -95,20 +106,25 @@ int main(int argc, char *argv[])
     std::thread cons[consumerNum];
 
     /* spawn producer threads */
+
     for (int id = 0; id < producerNum; id++)
         prod[id] = std::thread(producer);
+    cout << "Created Producer Threads\n";
     /* spawn consumer threads */
     for (int id = 0; id < producerNum; id++)
         cons[id] = std::thread(consumer);
+    cout << "Created Consumer Threads\n";
 
-    std::cout << "\nRunning " << producerNum;
+    std::cout << "\nRunning " << producerNum + consumerNum;
     std::cout << " in parallel: \n"
               << std::endl;
-    cout << "Wake up Threads\n";
-    run(); // Allows threads to run
+    cout << "Wake up Threads maybe\n";
+    runThreads(); // Allows threads to run
 
+    cout << "Sleeping";
     // Sleep then exit
     sleep(time);
+    cout << "Awake";
     /* spawn producer threads */
     for (int id = 0; id < producerNum; id++)
         prod[id].join();
