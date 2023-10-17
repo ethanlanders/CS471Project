@@ -86,15 +86,15 @@ int main(){
     // Read from input file
     readData(process);
     
-    for (const CPU_Process& p : process) {
-        q.push(p);
-    }
+    // for (const CPU_Process& p : process) {
+    //     q.push(p);
+    // }
 
     //FIFO(q);
 
     // Test
-    for(int i=0; i<20; i++){
-        cout << process[i].arrivalTime << " " << process[i].CPU_BurstLength << " " << process[i].priority << endl;
+    for (const CPU_Process& p : process) {
+        cout << p.arrivalTime  << p.CPU_BurstLength << p.priority << endl;
     }
     return 0;
 }
