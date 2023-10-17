@@ -52,10 +52,9 @@ void producer()
 
     while (ready)
     {
-        sleep(0);
-        cout << "Producing";
+        cout << "\nProducing";
         /* sleep for a random period of time from 0-5 seconds */
-        // sleep(rand() % 1);
+        sleep(rand() % 5);
         /* generate a random number */
         item = rand();
         if (true) // insert_item(item))
@@ -72,10 +71,9 @@ void consumer()
     sleep(1);
     while (ready)
     {
-        sleep(0);
-        cout << "Consuming";
+        cout << "\nConsuming";
         /* sleep for a random period of time from 0-5 seconds */
-        // sleep(rand() % 1);
+        sleep(rand() % 5);
         if (true) // remove_item(&item))
             cout << "report error condition";
         else
