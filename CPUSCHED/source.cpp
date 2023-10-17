@@ -28,6 +28,13 @@ void readData(CPU_Process process[]){
     else{
         cerr << "Cannot find that input file." << endl;
     }
+    // getline(inFile, firstLine);
+    // int processCounter = 0;
+    // while (inFile >> process[processCounter].arrivalTime >> process[processCounter].CPU_BurstLength >> process[processCounter].priority) {
+    //     processCounter++;
+    // }
+    // inFile.close();
+
     // // Testing to make sure reading in from .txt was successful.
     // for(int i=0; i<numOfProcesses; i++){
     //     cout << firstLine;
