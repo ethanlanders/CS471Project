@@ -13,22 +13,11 @@ struct CPU_Process{
     int priority;  
 };
 
-void readData(vector<CPU_Process> process){
+void readData(vector<CPU_Process>& process){
     ifstream inFile;
     string firstLine;
     inFile.open("datafile.txt");
 
-    // if(inFile.is_open()){
-    //     getline(inFile, firstLine);
-
-    //     for(int i=0; i<numOfProcesses; i++){
-    //         inFile >> process[i].arrivalTime >> process[i].CPU_BurstLength >> process[i].priority;
-    //     }
-    //     inFile.close();
-    // }
-    // else{
-    //     cerr << "Cannot find that input file." << endl;
-    // }
     int arrivalTime, CPU_BurstLength, priority;
     int processCounter = 0;
     getline(inFile, firstLine);
@@ -38,12 +27,6 @@ void readData(vector<CPU_Process> process){
         processCounter++;
     }
     inFile.close();
-
-    // // Testing to make sure reading in from .txt was successful.
-    // for(int i=0; i<numOfProcesses; i++){
-    //     cout << firstLine;
-    //     cout << process[i].arrivalTime << "   " << process[i].CPU_BurstLength << "   " << process[i].priority << endl;
-    // }
 }
 
 void output(){
@@ -94,7 +77,7 @@ int main(){
 
     // Test
     for (const CPU_Process& p : process) {
-        cout << p.arrivalTime  << p.CPU_BurstLength << p.priority << endl;
+        cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
     }
     return 0;
 }
