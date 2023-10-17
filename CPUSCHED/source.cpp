@@ -47,15 +47,23 @@ void output(){
     cout << "Average response time (in CPU burst times): " << endl;
 }
 
-void FIFO(queue<CPU_Process>& q, CPU_Process process[]){
+void FIFO(queue<CPU_Process>& q){
+    
+    int time = 0;
+
+    while(!q.empty()){
+        CPU_Process process = q.front();
+
+    }
+
     output();
 }
 
-void SJF(queue<CPU_Process>& q, CPU_Process process[]){
+void SJF(queue<CPU_Process>& q){
     output();
 }
 
-void preemptivePriority(queue<CPU_Process>& q, CPU_Process process[]){
+void preemptivePriority(queue<CPU_Process>& q){
     output();
 }
 
@@ -67,7 +75,11 @@ int main(){
     // Read from input file
     readData(process);
     
-    FIFO(q, process);
+    for (const CPU_Process& p : process) {
+        q.push(p);
+    }
+
+    FIFO(q);
 
     // Test
     for(int i=0; i<20; i++){
