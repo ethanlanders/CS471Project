@@ -13,21 +13,38 @@ struct CPU_Process{
     int priority;  
 };
 
-void readData(CPU_Process process[]){
+void readData(vector<CPU_Process> process){
     ifstream inFile;
     string firstLine;
     inFile.open("datafile.txt");
 
-    if(inFile.is_open()){
-        getline(inFile, firstLine);
-        for(int i=0; i<numOfProcesses; i++){
-            inFile >> process[i].arrivalTime >> process[i].CPU_BurstLength >> process[i].priority;
-        }
-        inFile.close();
+    // if(inFile.is_open()){
+    //     getline(inFile, firstLine);
+
+    //     for(int i=0; i<numOfProcesses; i++){
+    //         inFile >> process[i].arrivalTime >> process[i].CPU_BurstLength >> process[i].priority;
+    //     }
+    //     inFile.close();
+    // }
+    // else{
+    //     cerr << "Cannot find that input file." << endl;
+    // }
+    int arrivalTime, CPU_BurstLength, priority;
+    int processCounter = 0;
+    getline(inFile, firstLine);
+    while(inFile >> arrivalTime >> CPU_BurstLength >> priority){
+        CPU_Process p = {arrivalTime, CPU_BurstLength, priority};
+        process.push_back(p);
+        processCounter++;
     }
-    else{
-        cerr << "Cannot find that input file." << endl;
-    }
+    inFile.close();
+    // getline(inFile, firstLine);
+    // int processCounter = 0;
+    // while (inFile >> process[processCounter].arrivalTime >> process[processCounter].CPU_BurstLength >> process[processCounter].priority) {
+    //     processCounter++;
+    // }
+    // inFile.close();
+
     // // Testing to make sure reading in from .txt was successful.
     // for(int i=0; i<numOfProcesses; i++){
     //     cout << firstLine;
@@ -47,27 +64,39 @@ void output(){
     cout << "Average response time (in CPU burst times): " << endl;
 }
 
-void FIFO(queue<CPU_Process>& q, CPU_Process process[]){
+void FIFO(queue<CPU_Process>& q){
+    
+    int time = 0;
+
+    while(!q.empty()){
+        CPU_Process process = q.front();
+
+    }
+
     output();
 }
 
-void SJF(queue<CPU_Process>& q, CPU_Process process[]){
+void SJF(queue<CPU_Process>& q){
     output();
 }
 
-void preemptivePriority(queue<CPU_Process>& q, CPU_Process process[]){
+void preemptivePriority(queue<CPU_Process>& q){
     output();
 }
 
 int main(){
     // Declare needed variables
     queue<CPU_Process> q;
-    CPU_Process process[numOfProcesses];
+    vector<CPU_Process> process;
 
     // Read from input file
     readData(process);
     
-    FIFO(q, process);
+    for (const CPU_Process& p : process) {
+        q.push(p);
+    }
+
+    //FIFO(q);
 
     // Test
     for(int i=0; i<20; i++){
