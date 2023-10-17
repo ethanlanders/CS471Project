@@ -38,12 +38,6 @@ void readData(vector<CPU_Process> process){
         processCounter++;
     }
     inFile.close();
-    // getline(inFile, firstLine);
-    // int processCounter = 0;
-    // while (inFile >> process[processCounter].arrivalTime >> process[processCounter].CPU_BurstLength >> process[processCounter].priority) {
-    //     processCounter++;
-    // }
-    // inFile.close();
 
     // // Testing to make sure reading in from .txt was successful.
     // for(int i=0; i<numOfProcesses; i++){
@@ -92,15 +86,15 @@ int main(){
     // Read from input file
     readData(process);
     
-    for (const CPU_Process& p : process) {
-        q.push(p);
-    }
+    // for (const CPU_Process& p : process) {
+    //     q.push(p);
+    // }
 
     //FIFO(q);
 
     // Test
-    for(int i=0; i<20; i++){
-        cout << process[i].arrivalTime << " " << process[i].CPU_BurstLength << " " << process[i].priority << endl;
+    for (const CPU_Process& p : process) {
+        cout << p.arrivalTime  << p.CPU_BurstLength << p.priority << endl;
     }
     return 0;
 }
