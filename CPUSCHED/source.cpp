@@ -38,12 +38,6 @@ void readData(vector<CPU_Process> process){
         processCounter++;
     }
     inFile.close();
-    // getline(inFile, firstLine);
-    // int processCounter = 0;
-    // while (inFile >> process[processCounter].arrivalTime >> process[processCounter].CPU_BurstLength >> process[processCounter].priority) {
-    //     processCounter++;
-    // }
-    // inFile.close();
 
     // // Testing to make sure reading in from .txt was successful.
     // for(int i=0; i<numOfProcesses; i++){
