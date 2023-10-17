@@ -13,21 +13,31 @@ struct CPU_Process{
     int priority;  
 };
 
-void readData(CPU_Process process[]){
+void readData(vector<CPU_Process> process){
     ifstream inFile;
     string firstLine;
     inFile.open("datafile.txt");
 
-    if(inFile.is_open()){
-        getline(inFile, firstLine);
-        for(int i=0; i<numOfProcesses; i++){
-            inFile >> process[i].arrivalTime >> process[i].CPU_BurstLength >> process[i].priority;
-        }
-        inFile.close();
+    // if(inFile.is_open()){
+    //     getline(inFile, firstLine);
+
+    //     for(int i=0; i<numOfProcesses; i++){
+    //         inFile >> process[i].arrivalTime >> process[i].CPU_BurstLength >> process[i].priority;
+    //     }
+    //     inFile.close();
+    // }
+    // else{
+    //     cerr << "Cannot find that input file." << endl;
+    // }
+    int arrivalTime, CPU_BurstLength, priority;
+    int processCounter = 0;
+    getline(inFile, firstLine);
+    while(inFile >> arrivalTime >> CPU_BurstLength >> priority){
+        CPU_Process p = {arrivalTime, CPU_BurstLength, priority};
+        process.push_back(p);
+        processCounter++;
     }
-    else{
-        cerr << "Cannot find that input file." << endl;
-    }
+    inFile.close();
     // getline(inFile, firstLine);
     // int processCounter = 0;
     // while (inFile >> process[processCounter].arrivalTime >> process[processCounter].CPU_BurstLength >> process[processCounter].priority) {
@@ -77,7 +87,7 @@ void preemptivePriority(queue<CPU_Process>& q){
 int main(){
     // Declare needed variables
     queue<CPU_Process> q;
-    CPU_Process process[numOfProcesses];
+    vector<CPU_Process> process;
 
     // Read from input file
     readData(process);
@@ -86,7 +96,7 @@ int main(){
         q.push(p);
     }
 
-    FIFO(q);
+    //FIFO(q);
 
     // Test
     for(int i=0; i<20; i++){
