@@ -50,50 +50,43 @@ void calculations(vector<CPU_Process>& processes){
         totalWaitingTime += waitingTime;
 
         currentTime += p.CPU_BurstLength;
+
+        int turnaroundTime = currentTime - p.arrivalTime;
+        totalTurnaroundTime += turnaroundTime;
     }
 
     cout << "Statistics for the Run\n\n";
     cout << "Number of processes: " << numOfProcesses << endl;
-    cout << "Total elapsed time (for the scheduler): " << endl;
+    cout << "Total elapsed time (for the scheduler): " << totalElapsedTime << endl;
     cout << "Throughput (Number of processes executed in one unit " 
             "of CPU burst time): " << endl;
     cout << "CPU utilization: " << endl;
-    cout << "Average waiting time (in CPU burst times): " << endl;
-    cout << "Average turnaround time (in CPU burst times): " << endl;
-    cout << "Average response time (in CPU burst times): " << endl;
+    cout << "Average waiting time (in CPU burst times): " << static_cast<double>(totalWaitingTime)/numOfProcesses << endl;
+    cout << "Average turnaround time (in CPU burst times): " << static_cast<double>(totalTurnaroundTime)/numOfProcesses << endl;
+    cout << "Average response time (in CPU burst times): " << static_cast<double>(totalResponseTime)/numOfProcesses << endl;
 }
 
 void FIFO(vector<CPU_Process>& processes){
-    
     int time = 0;
 
-    // while(!q.empty()){
-    //     CPU_Process process = q.front();
-
-    // }
     calculations(processes);
 }
 
-// void SJF(queue<CPU_Process>& q){
+// void SJF(){
 //     output();
 // }
 
-// void preemptivePriority(queue<CPU_Process>& q){
+// void preemptivePriority(){
 //     output();
 // }
 
 int main(){
     // Declare needed variables
-    // queue<CPU_Process> q;
     vector<CPU_Process> processes;
-    
-    // for (const CPU_Process& p : process) {
-    //     q.push(p);
-    // }
 
     //FIFO(processes);
 
-    // Test
+    // TEST TO SEE IF INPUT WAS SUCCESSFUL
     // for (const CPU_Process& p : process) {
     //     cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
     // }
