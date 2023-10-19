@@ -51,9 +51,7 @@ void calculations(vector<CPU_Process>& processes){
 
         currentTime += p.CPU_BurstLength;
     }
-}
 
-void output(){
     cout << "Statistics for the Run\n\n";
     cout << "Number of processes: " << numOfProcesses << endl;
     cout << "Total elapsed time (for the scheduler): " << endl;
@@ -74,7 +72,6 @@ void FIFO(vector<CPU_Process>& processes){
 
     // }
     calculations(processes);
-    output();
 }
 
 // void SJF(queue<CPU_Process>& q){
