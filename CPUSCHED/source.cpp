@@ -14,7 +14,7 @@ struct CPU_Process{
     int responseTime;
 };
 
-void readData(vector<CPU_Process>& process){
+void readData(vector<CPU_Process>& processes){
     ifstream inFile;
     string firstLine;
     inFile.open("datafile.txt");
@@ -24,13 +24,13 @@ void readData(vector<CPU_Process>& process){
     getline(inFile, firstLine);
     while(inFile >> arrivalTime >> CPU_BurstLength >> priority){
         CPU_Process p = {arrivalTime, CPU_BurstLength, priority};
-        process.push_back(p);
+        processes.push_back(p);
         processCounter++;
     }
     inFile.close();
 }
 
-void calculations(vector<CPU_Process>& process){
+void calculations(vector<CPU_Process>& processes){
     int totalElapsedTime = 0;
     int numOfCompletedProcesses = 0;
     int totalCPUBurstTime = 0;
@@ -41,10 +41,15 @@ void calculations(vector<CPU_Process>& process){
 
     // For 500 processes in the vector...
     for(int i=0; i<numOfProcesses; i++){
-        const CPU_Process& p = process[i];
-        int responseTime = currentTime;
+        const CPU_Process& p = processes[i];
+
+        int responseTime = currentTime - p.arrivalTime;
         totalElapsedTime += p.CPU_BurstLength;
-        
+
+        int waitingTime = currentTime - p.arrivalTime;
+        totalWaitingTime += waitingTime;
+
+        currentTime += p.CPU_BurstLength;
     }
 }
 
@@ -60,41 +65,36 @@ void output(){
     cout << "Average response time (in CPU burst times): " << endl;
 }
 
-void FIFO(queue<CPU_Process>& q){
+void FIFO(vector<CPU_Process>& processes){
     
     int time = 0;
 
-    while(!q.empty()){
-        CPU_Process process = q.front();
+    // while(!q.empty()){
+    //     CPU_Process process = q.front();
 
-    }
-
+    // }
+    calculations(processes);
     output();
 }
 
-void SJF(queue<CPU_Process>& q){
-    output();
-}
+// void SJF(queue<CPU_Process>& q){
+//     output();
+// }
 
-void preemptivePriority(queue<CPU_Process>& q){
-    output();
-}
+// void preemptivePriority(queue<CPU_Process>& q){
+//     output();
+// }
 
 int main(){
     // Declare needed variables
-    queue<CPU_Process> q;
-    vector<CPU_Process> process;
-
-    // Read from input file
-    readData(process);
+    // queue<CPU_Process> q;
+    vector<CPU_Process> processes;
     
     // for (const CPU_Process& p : process) {
     //     q.push(p);
     // }
 
-    //FIFO(q);
-    
-    calculations(process);
+    //FIFO(processes);
 
     // Test
     // for (const CPU_Process& p : process) {
