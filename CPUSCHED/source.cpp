@@ -10,7 +10,8 @@ using namespace std;
 struct CPU_Process{
     int arrivalTime;
     int CPU_BurstLength;
-    int priority;  
+    int priority;
+    int responseTime;
 };
 
 void readData(vector<CPU_Process>& process){
@@ -27,6 +28,24 @@ void readData(vector<CPU_Process>& process){
         processCounter++;
     }
     inFile.close();
+}
+
+void calculations(vector<CPU_Process>& process){
+    int totalElapsedTime = 0;
+    int numOfCompletedProcesses = 0;
+    int totalCPUBurstTime = 0;
+    int totalWaitingTime = 0;
+    int totalTurnaroundTime = 0;
+    int totalResponseTime = 0;
+    int currentTime = 0;
+
+    // For 500 processes in the vector...
+    for(int i=0; i<numOfProcesses; i++){
+        const CPU_Process& p = process[i];
+        int responseTime = currentTime;
+        totalElapsedTime += p.CPU_BurstLength;
+        
+    }
 }
 
 void output(){
@@ -74,10 +93,15 @@ int main(){
     // }
 
     //FIFO(q);
+    
+    calculations(process);
 
     // Test
-    for (const CPU_Process& p : process) {
-        cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
-    }
-    return 0;
+    // for (const CPU_Process& p : process) {
+    //     cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
+    // }
+    // return 0;
+
+    // If code works:
+    cout << "Compiled successfully!" << endl;
 }
