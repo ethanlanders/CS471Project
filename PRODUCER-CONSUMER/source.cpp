@@ -47,8 +47,8 @@ bool remove_item(int& item)
     unique_lock<mutex> lock(buf);
 
     if(buffer.size() > 0){
-        item = buffer.begin();
-        buffer.erase(item);
+        item = buffer.front();
+        buffer.erase(buffer.begin());
         remove = true;
     }
  
@@ -68,9 +68,8 @@ void producer()
         /* sleep for a random period of time from 0-5 seconds */
         sleep(rand() % 5);
         /* generate a random number */
-        cout << "Producing\n";
-        item = rand();
-        if (!insert_item(item%100)) // insert_item(item))
+        item = rand()%100;
+        if (!insert_item(item)) // insert_item(item))
             cout << "Producer Error: Full buffer\n";
         else
             cout << "Producer produced "
@@ -88,9 +87,8 @@ void consumer()
     {
         /* sleep for a random period of time from 0-5 seconds */
         sleep(rand() % 5);
-        cout << "Consuming\n";
         if (!remove_item(item)) // remove_item(&item))
-            cout << "Report Error: Empty Buffer\n";
+            cout << "Consumer Error: Empty Buffer\n";
         else
             cout << "Consumer consumed "
                  << item << "\n";
