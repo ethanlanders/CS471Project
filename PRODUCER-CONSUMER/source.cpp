@@ -24,7 +24,7 @@ vector<int> buffer;
 #define BUFFER_SIZE 5
 
 // buffer_item buffer[BUFFER_SIZE];
-
+  
 // buffer Functions
 bool insert_item(int item)
 {
