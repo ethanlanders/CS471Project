@@ -51,7 +51,7 @@ bool remove_item(int& item)
         buffer.erase(item);
         remove = true;
     }
-
+ 
     cv.notify_one();
     return remove;
 }
