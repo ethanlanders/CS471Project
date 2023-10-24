@@ -19,30 +19,40 @@ condition_variable cv;
 
 // Per textbook problem statement
 // #include "buffer.h"
-
-typedef int buffer_item;
-vector<buffer_item> buffer;
+vector<int> buffer;
 
 #define BUFFER_SIZE 5
 
 // buffer_item buffer[BUFFER_SIZE];
 
 // buffer Functions
-bool insert_item(buffer_item item)
+bool insert_item(int item)
 {
     bool insert = false;
     unique_lock<mutex> lock(buf);
 
-    cv.notify_all();
+    if(buffer.size() < BUFFER_SIZE){
+        buffer.push_back(item);
+        if(buffer.back() == item)
+            insert = true;
+    }
+
+    cv.notify_one();
     return insert;
 } 
 
-bool remove_item(buffer_item item)
+bool remove_item(int& item)
 {
     bool remove = false;
     unique_lock<mutex> lock(buf);
 
-    cv.notify_all();
+    if(buffer.size() > 0){
+        item = buffer.begin();
+        buffer.erase(item);
+        remove = true;
+    }
+
+    cv.notify_one();
     return remove;
 }
 
@@ -60,11 +70,11 @@ void producer()
         /* generate a random number */
         cout << "Producing\n";
         item = rand();
-        if (insert_item(item)) // insert_item(item))
+        if (!insert_item(item%100)) // insert_item(item))
             cout << "Producer Error: Full buffer\n";
         else
-            cout << "Producer produced\n"
-                 << item;
+            cout << "Producer produced "
+                 << item << "\n";
     }
 }
 
@@ -77,13 +87,13 @@ void consumer()
     while (ready)
     {
         /* sleep for a random period of time from 0-5 seconds */
-        sleep(0);//rand() % 5);
+        sleep(rand() % 5);
         cout << "Consuming\n";
-        if (remove_item(item)) // remove_item(&item))
+        if (!remove_item(item)) // remove_item(&item))
             cout << "Report Error: Empty Buffer\n";
         else
-            cout << "Consumer consumed\n"
-                 << item;
+            cout << "Consumer consumed "
+                 << item << "\n";
     }
 }
 
@@ -98,7 +108,7 @@ void runThreads(int time)
 int main(int argc, char *argv[])
 {
     // Get CLI input
-    int time = 100;
+    int time = 20;
     int producerNum = 1;
     int consumerNum = 1;
 
