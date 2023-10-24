@@ -25,7 +25,7 @@ void readData(vector<CPU_Process>& processes){
     if (!inFile) {
         cerr << "Error opening datafile.txt" << endl;
         return;
-    }
+    } 
 
     int arrivalTime, CPU_BurstLength, priority;
     int processCounter = 0;
