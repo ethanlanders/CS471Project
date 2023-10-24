@@ -35,7 +35,7 @@ bool insert_item(buffer_item item)
 
     cv.notify_all();
     return insert;
-}
+} 
 
 bool remove_item(buffer_item item)
 {
