@@ -19,6 +19,11 @@ void readData(vector<CPU_Process>& processes){
     string firstLine;
     inFile.open("datafile.txt");
 
+    if (!inFile) {
+        cerr << "Error opening datafile.txt" << endl;
+        return;
+    }
+
     int arrivalTime, CPU_BurstLength, priority;
     int processCounter = 0;
     getline(inFile, firstLine);
@@ -28,23 +33,25 @@ void readData(vector<CPU_Process>& processes){
         processCounter++;
     }
     inFile.close();
+    
+    // TEST TO SEE IF INPUT WAS SUCCESSFUL
+    for (const CPU_Process& p : processes) {
+        cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
+    }
 }
 
 void calculations(vector<CPU_Process>& processes){
-    int totalElapsedTime = 0;
+    int totalElapsedTime        = 0;
     int numOfCompletedProcesses = 0;
-    int totalCPUBurstTime = 0;
-    int totalWaitingTime = 0;
-    int totalTurnaroundTime = 0;
-    int totalResponseTime = 0;
-    int currentTime = 0;
+    int totalCPUBurstTime       = 0;
+    int totalWaitingTime        = 0;
+    int totalTurnaroundTime     = 0;
+    int totalResponseTime       = 0;
+    int currentTime             = 0;
 
-    // For 500 processes in the vector...
-    for(int i=0; i<numOfProcesses; i++){
-        const CPU_Process& p = processes[i];
-
+    for(const CPU_Process& p : processes){
         int responseTime = currentTime - p.arrivalTime;
-        totalElapsedTime += p.CPU_BurstLength;
+        totalResponseTime += responseTime;
 
         int waitingTime = currentTime - p.arrivalTime;
         totalWaitingTime += waitingTime;
@@ -53,7 +60,15 @@ void calculations(vector<CPU_Process>& processes){
 
         int turnaroundTime = currentTime - p.arrivalTime;
         totalTurnaroundTime += turnaroundTime;
+
+        numOfCompletedProcesses++;
+
+        if(numOfCompletedProcesses > 500){
+            break;
+        }
     }
+
+    totalElapsedTime = currentTime;
 
     cout << "Statistics for the Run\n\n";
     cout << "Number of processes: " << numOfProcesses << endl;
@@ -84,14 +99,13 @@ int main(){
     // Declare needed variables
     vector<CPU_Process> processes;
 
-    //FIFO(processes);
+    FIFO(processes);
 
-    // TEST TO SEE IF INPUT WAS SUCCESSFUL
-    // for (const CPU_Process& p : process) {
-    //     cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
-    // }
-    // return 0;
+    // testing
+    // readData(processes);
 
     // If code works:
     cout << "Compiled successfully!" << endl;
+
+    return 0;
 }
