@@ -32,27 +32,18 @@ bool insert_item(buffer_item item)
 {
     bool insert = false;
     unique_lock<mutex> lock(buf);
-    cv.wait(lock);
-    // Insert Item
-    cv.notify_one();
-    return insert; // If successful
-    // return true;  // Indicating error
+
+    cv.notify_all();
+    return insert;
 }
 
 bool remove_item(buffer_item item)
 {
-    cout << "~Removing Start\n";
     bool remove = false;
     unique_lock<mutex> lock(buf);
-    cout << "~Removing Lock\n";
-    cv.wait(lock);
-    cout << "~Removing Past Wait\n";
-    // Remove Item
-    cv.notify_one();
 
-    cout << "~Removing End\n";
-    return remove; // Nothing to remove
-    // return true;  // Indicating error
+    cv.notify_all();
+    return remove;
 }
 
 // Threads Functions
@@ -86,7 +77,7 @@ void consumer()
     while (ready)
     {
         /* sleep for a random period of time from 0-5 seconds */
-        sleep(rand() % 5);
+        sleep(0);//rand() % 5);
         cout << "Consuming\n";
         if (remove_item(item)) // remove_item(&item))
             cout << "Report Error: Empty Buffer\n";
@@ -107,7 +98,7 @@ void runThreads(int time)
 int main(int argc, char *argv[])
 {
     // Get CLI input
-    int time = 5;
+    int time = 100;
     int producerNum = 1;
     int consumerNum = 1;
 
@@ -121,8 +112,6 @@ int main(int argc, char *argv[])
     /* spawn producer threads */
     timer = std::thread(runThreads, time);
 
-    unique_lock<mutex> lock(buf);
-
     for (int id = 0; id < producerNum; id++)
         prod[id] = std::thread(producer);
     cout << "Created Producer Threads\n";
@@ -135,7 +124,6 @@ int main(int argc, char *argv[])
     std::cout << " in parallel: \n"
               << std::endl;
 
-    cv.notify_one();
 
     /* close producer threads */
     for (int id = 0; id < producerNum; id++)
