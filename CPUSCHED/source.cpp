@@ -35,7 +35,7 @@ void readData(vector<CPU_Process>& processes){
     inFile.close();
     
     // TEST TO SEE IF INPUT WAS SUCCESSFUL
-    for (const CPU_Process& p : processes) {
+    for (CPU_Process p : processes) {
         cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
     }
 }
@@ -49,7 +49,7 @@ void calculations(vector<CPU_Process>& processes){
     int totalResponseTime       = 0;
     int currentTime             = 0;
 
-    for(const CPU_Process& p : processes){
+    for(CPU_Process p : processes){
         int responseTime = currentTime - p.arrivalTime;
         totalResponseTime += responseTime;
 
@@ -98,6 +98,8 @@ void FIFO(vector<CPU_Process>& processes){
 int main(){
     // Declare needed variables
     vector<CPU_Process> processes;
+
+    readData(processes);
 
     FIFO(processes);
 
