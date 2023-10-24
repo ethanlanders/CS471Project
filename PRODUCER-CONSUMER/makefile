@@ -6,10 +6,10 @@ INPUT = datafile.txt
 all: $(TARGET)
 
 $(TARGET): $(TARGET).cpp
-	$(CC) $(TARGET).cpp -o $(TARGET) -lpthread
+	make clean ; $(CC) $(TARGET).cpp -o $(TARGET) -lpthread
 
 clean:
 	rm $(TARGET)
 
 test:
-	./$(TARGET)
+	make ; ./$(TARGET)

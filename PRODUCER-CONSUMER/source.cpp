@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <mutex>
 #include <condition_variable>
+#include <vector>
+
 // #include <random>
 // let me save please
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -17,30 +19,31 @@ condition_variable cv;
 
 // Per textbook problem statement
 // #include "buffer.h"
+
 typedef int buffer_item;
+vector<buffer_item> buffer;
+
 #define BUFFER_SIZE 5
 
-buffer_item buffer[BUFFER_SIZE];
+// buffer_item buffer[BUFFER_SIZE];
 
 // buffer Functions
 bool insert_item(buffer_item item)
 {
+    bool insert = false;
     unique_lock<mutex> lock(buf);
-    cv.wait(lock);
-    // Insert Item
-    cv.notify_one();
-    return false; // If successful
-    // return true;  // Indicating error
-}
 
-bool remove_item(buffer_item *item)
+    cv.notify_all();
+    return insert;
+} 
+
+bool remove_item(buffer_item item)
 {
+    bool remove = false;
     unique_lock<mutex> lock(buf);
-    cv.wait(lock);
-    // Remove Item
-    cv.notify_one();
-    return false; // If successful
-    // return true;  // Indicating error
+
+    cv.notify_all();
+    return remove;
 }
 
 // Threads Functions
@@ -52,15 +55,16 @@ void producer()
 
     while (ready)
     {
-        cout << "\nProducing";
         /* sleep for a random period of time from 0-5 seconds */
         sleep(rand() % 5);
         /* generate a random number */
+        cout << "Producing\n";
         item = rand();
-        if (true) // insert_item(item))
-            cout << "report error condition";
+        if (insert_item(item)) // insert_item(item))
+            cout << "Producer Error: Full buffer\n";
         else
-            cout << "producer produced " << item;
+            cout << "Producer produced\n"
+                 << item;
     }
 }
 
@@ -69,15 +73,17 @@ void consumer()
     // buffer_item item;
     int item = 0;
     sleep(1);
+
     while (ready)
     {
-        cout << "\nConsuming";
         /* sleep for a random period of time from 0-5 seconds */
-        sleep(rand() % 5);
-        if (true) // remove_item(&item))
-            cout << "report error condition";
+        sleep(0);//rand() % 5);
+        cout << "Consuming\n";
+        if (remove_item(item)) // remove_item(&item))
+            cout << "Report Error: Empty Buffer\n";
         else
-            cout << "consumer consumed " << item;
+            cout << "Consumer consumed\n"
+                 << item;
     }
 }
 
@@ -92,7 +98,7 @@ void runThreads(int time)
 int main(int argc, char *argv[])
 {
     // Get CLI input
-    int time = 5;
+    int time = 100;
     int producerNum = 1;
     int consumerNum = 1;
 
@@ -118,8 +124,8 @@ int main(int argc, char *argv[])
     std::cout << " in parallel: \n"
               << std::endl;
 
+
     /* close producer threads */
-    cout << "Close Threads";
     for (int id = 0; id < producerNum; id++)
         prod[id].join();
     /* close consumer threads */
