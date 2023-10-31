@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <queue>
+#include <bits/stdc++.h> 
 
 #define numOfProcesses 500
 
@@ -100,7 +101,6 @@ void calculations(vector<CPU_Process>& processes){
     double cpuUtilization = static_cast<double>(totalCPUBurstTime) / totalElapsedTime;
 
     // Display calculations 
-    cout << "\nStatistics for the Run\n\n";
     cout << "Number of processes: " << numOfProcesses << endl;
     cout << "Total elapsed time (for the scheduler): " << totalElapsedTime << endl;
     cout << "Throughput (Number of processes executed in one unit " 
@@ -108,26 +108,37 @@ void calculations(vector<CPU_Process>& processes){
     cout << "CPU utilization: " << cpuUtilization << endl;
     cout << "Average waiting time (in CPU burst times): " << static_cast<double>(totalWaitingTime)/numOfCompletedProcesses << endl;
     cout << "Average turnaround time (in CPU burst times): " << static_cast<double>(totalTurnaroundTime)/numOfCompletedProcesses << endl;
-    cout << "Average response time (in CPU burst times): " << static_cast<double>(totalResponseTime)/numOfCompletedProcesses << endl << endl;
+    cout << "Average response time (in CPU burst times): " << static_cast<double>(totalResponseTime)/numOfCompletedProcesses << endl << endl << endl;
 }
 
 // Function to perform First-In-First-Out (FIFO) Scheduling
-void FIFO(vector<CPU_Process>& processes){
-    int time = 0;
-
+void FIFO(vector<CPU_Process> processes){
+    cout << "\nStatistics for FIFO Scheduling\n\n";
     calculations(processes);
 }
 
 // Function to perform Shortest-Job First (SJF) Scheduling
-// void SJF(){
-//     output();
-// }
+void SJF(vector<CPU_Process> processes){
+    // Sort vector from shortest to longest CPU burst length for each process
+    sort(processes.begin(), processes.end(), [](CPU_Process a, CPU_Process b) 
+         {return a.CPU_BurstLength < b.CPU_BurstLength;});
+
+    // Test if sorting worked properly
+    // for (CPU_Process p : processes) {
+    //     cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
+    // }
+
+    cout << "\nStatistics for SJF Scheduling\n\n";
+    calculations(processes);
+}
 
 
 // Function to perform Preemptive Priority Scheduling
-// void preemptivePriority(){
-//     output();
-// }
+void preemptivePriority(vector<CPU_Process>& processes){
+    
+    cout << "\nStatistics for Preemptive Priority Scheduling\n\n";
+    calculations(processes);
+}
 
 int main(){
     // Declare needed variables
@@ -139,6 +150,12 @@ int main(){
     // Perform FIFO CPU scheduling 
     FIFO(processes);
  
+    // Perform SJF CPU scheduling
+    SJF(processes);
+
+    // Perform Preemptive Priority Scheduling
+    preemptivePriority(processes);
+
     return 0;
 }
 
