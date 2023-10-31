@@ -50,6 +50,7 @@ void readData(vector<CPU_Process>& processes){
 
 // Function to calculate and display statistics for CPU processes
 void calculations(vector<CPU_Process>& processes){
+    // Declare variables
     int totalElapsedTime        = 0;
     int numOfCompletedProcesses = 0;
     int totalCPUBurstTime       = 0;
@@ -59,32 +60,42 @@ void calculations(vector<CPU_Process>& processes){
     int currentTime             = 0;
 
     for(CPU_Process p : processes){
+        // Wait for the next proccess if the current one has not arrived
         if(p.arrivalTime > currentTime) {
             currentTime = p.arrivalTime;
         }
 
+        // Calculate response time
         int responseTime = currentTime - p.arrivalTime;
         totalResponseTime += responseTime;
 
+        // Calculate waiting time
         int waitingTime = currentTime - p.arrivalTime;
         totalWaitingTime += waitingTime;
 
+        // Simulate the CPU's burst time
         currentTime += p.CPU_BurstLength;
 
+        // Calculate turnaround time
         int turnaroundTime = currentTime - p.arrivalTime;
         totalTurnaroundTime += turnaroundTime;
 
+        // Calculate total CPU burst time
         totalCPUBurstTime += p.CPU_BurstLength;
 
+        // Increment the number of completed processes
         numOfCompletedProcesses++;
 
+        // Exit the loop when 500 processes are completed
         if(numOfCompletedProcesses >= 500){
             break;
         }
     }
 
+    // Set total elapsed time to what the current time is at the end of calculations
     totalElapsedTime = currentTime;
 
+    // Calculate throughoutput (proccesses per unit of time) and CPU utilization
     double throughput = static_cast<double>(numOfCompletedProcesses) / totalElapsedTime;
     double cpuUtilization = static_cast<double>(totalCPUBurstTime) / totalElapsedTime;
 
