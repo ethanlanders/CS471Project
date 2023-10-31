@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Define a structure to represent a CPU process
 struct CPU_Process{
     int arrivalTime;
     int CPU_BurstLength;
@@ -14,33 +15,42 @@ struct CPU_Process{
     int responseTime;
 };
 
+// Function to read CPU process data from a file named "datafile.txt"
 void readData(vector<CPU_Process>& processes){
     ifstream inFile;
     string firstLine;
     inFile.open("datafile.txt");
 
+    // if statement to determine if input file successfully opened
     if (!inFile) {
         cerr << "Error opening datafile.txt" << endl;
         return;
-    }
+    } 
 
     int arrivalTime, CPU_BurstLength, priority;
     int processCounter = 0;
+
+    // Read CPU process data from the input file
     getline(inFile, firstLine);
     while(inFile >> arrivalTime >> CPU_BurstLength >> priority){
+        // Create a CPU_Process struct to push read in material to the processes vector
         CPU_Process p = {arrivalTime, CPU_BurstLength, priority};
         processes.push_back(p);
         processCounter++;
     }
+
+    // Close the input file after reading in
     inFile.close();
     
-    // TEST TO SEE IF INPUT WAS SUCCESSFUL
-    for (CPU_Process p : processes) {
-        cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
-    }
+    // **Test to see if input was successful**
+    // for (CPU_Process p : processes) {
+    //     cout << p.arrivalTime << "   " << p.CPU_BurstLength << "   " << p.priority << endl;
+    // }
 }
 
+// Function to calculate and display statistics for CPU processes
 void calculations(vector<CPU_Process>& processes){
+    // Declare variables
     int totalElapsedTime        = 0;
     int numOfCompletedProcesses = 0;
     int totalCPUBurstTime       = 0;
@@ -50,47 +60,71 @@ void calculations(vector<CPU_Process>& processes){
     int currentTime             = 0;
 
     for(CPU_Process p : processes){
+        // Wait for the next proccess if the current one has not arrived
+        if(p.arrivalTime > currentTime) {
+            currentTime = p.arrivalTime;
+        }
+
+        // Calculate response time
         int responseTime = currentTime - p.arrivalTime;
         totalResponseTime += responseTime;
 
+        // Calculate waiting time
         int waitingTime = currentTime - p.arrivalTime;
         totalWaitingTime += waitingTime;
 
+        // Simulate the CPU's burst time
         currentTime += p.CPU_BurstLength;
 
+        // Calculate turnaround time
         int turnaroundTime = currentTime - p.arrivalTime;
         totalTurnaroundTime += turnaroundTime;
 
+        // Calculate total CPU burst time
+        totalCPUBurstTime += p.CPU_BurstLength;
+
+        // Increment the number of completed processes
         numOfCompletedProcesses++;
 
-        if(numOfCompletedProcesses > 500){
+        // Exit the loop when 500 processes are completed
+        if(numOfCompletedProcesses >= 500){
             break;
         }
     }
 
+    // Set total elapsed time to what the current time is at the end of calculations
     totalElapsedTime = currentTime;
 
-    cout << "Statistics for the Run\n\n";
+    // Calculate throughoutput (proccesses per unit of time) and CPU utilization
+    double throughput = static_cast<double>(numOfCompletedProcesses) / totalElapsedTime;
+    double cpuUtilization = static_cast<double>(totalCPUBurstTime) / totalElapsedTime;
+
+    // Display calculations 
+    cout << "\nStatistics for the Run\n\n";
     cout << "Number of processes: " << numOfProcesses << endl;
     cout << "Total elapsed time (for the scheduler): " << totalElapsedTime << endl;
     cout << "Throughput (Number of processes executed in one unit " 
-            "of CPU burst time): " << endl;
-    cout << "CPU utilization: " << endl;
-    cout << "Average waiting time (in CPU burst times): " << static_cast<double>(totalWaitingTime)/numOfProcesses << endl;
-    cout << "Average turnaround time (in CPU burst times): " << static_cast<double>(totalTurnaroundTime)/numOfProcesses << endl;
-    cout << "Average response time (in CPU burst times): " << static_cast<double>(totalResponseTime)/numOfProcesses << endl;
+            "of CPU burst time): " << throughput << endl;
+    cout << "CPU utilization: " << cpuUtilization << endl;
+    cout << "Average waiting time (in CPU burst times): " << static_cast<double>(totalWaitingTime)/numOfCompletedProcesses << endl;
+    cout << "Average turnaround time (in CPU burst times): " << static_cast<double>(totalTurnaroundTime)/numOfCompletedProcesses << endl;
+    cout << "Average response time (in CPU burst times): " << static_cast<double>(totalResponseTime)/numOfCompletedProcesses << endl << endl;
 }
 
+// Function to perform First-In-First-Out (FIFO) Scheduling
 void FIFO(vector<CPU_Process>& processes){
     int time = 0;
 
     calculations(processes);
 }
 
+// Function to perform Shortest-Job First (SJF) Scheduling
 // void SJF(){
 //     output();
 // }
 
+
+// Function to perform Preemptive Priority Scheduling
 // void preemptivePriority(){
 //     output();
 // }
@@ -99,15 +133,12 @@ int main(){
     // Declare needed variables
     vector<CPU_Process> processes;
 
+    // Read process data from the input file, save to vector of processes
     readData(processes);
 
+    // Perform FIFO CPU scheduling 
     FIFO(processes);
-
-    // testing
-    // readData(processes);
-
-    // If code works:
-    cout << "Compiled successfully!" << endl;
-
+ 
     return 0;
 }
+
