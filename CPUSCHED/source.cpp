@@ -109,7 +109,7 @@ void calculations(vector<CPU_Process>& processes){
     cout << "Average waiting time (in CPU burst times): " << static_cast<double>(totalWaitingTime)/numOfCompletedProcesses << endl;
     cout << "Average turnaround time (in CPU burst times): " << static_cast<double>(totalTurnaroundTime)/numOfCompletedProcesses << endl;
     cout << "Average response time (in CPU burst times): " << static_cast<double>(totalResponseTime)/numOfCompletedProcesses << endl << endl << endl;
-}
+} 
 
 // Function to perform First-In-First-Out (FIFO) Scheduling
 void FIFO(vector<CPU_Process> processes){
