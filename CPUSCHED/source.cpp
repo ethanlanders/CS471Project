@@ -1,7 +1,7 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <queue>
+#include <fstream>
 #include <bits/stdc++.h> 
 
 #define numOfProcesses 500
@@ -59,38 +59,99 @@ void calculations(vector<CPU_Process>& processes){
     int totalTurnaroundTime     = 0;
     int totalResponseTime       = 0;
     int currentTime             = 0;
+    int totalIdleTime           = 0;
+
+    vector<CPU_Process> buffer;
+
+    // Arrival time CPU Burst length Priority
+    // 10 22 1 
+    // 68 12 6
+    // 98 34 8
+    // 148 28 10
+    // 192 3 3
+    // 223 8 3
+    // 266 18 2
+    // 268 14 10
+    // 268 30 4
+
+    // totalIdleTime == 10;
+    // Buffer:  {(10, 22, 1)}
+
+    // totalIdleTime == 10;
+    // currentTime == 
+    // Buffer:  {(10, 22, 1)}
 
     for(CPU_Process p : processes){
-        // Wait for the next proccess if the current one has not arrived
-        if(p.arrivalTime > currentTime) {
-            currentTime = p.arrivalTime;
+        // Buffer is Empty
+        if(buffer.empty())
+        {
+            totalIdleTime = totalIdleTime + p.arrivalTime - currentTime;
+            currentTime = currentTime + (p.arrivalTime - currentTime);
+            buffer.push_back(p);
+        } 
+        // There are ___ processes in the vector
+        else 
+        { 
+            buffer.push_back(p);
+
+            // sort buffer by burst for SJF
+
+            // update buffer processes (burst time)
+
+            // remove process in buffer if finished
+
+            // 223 8 3 (now finished)
+            // 268 14 10
+            // 266 16 2
+            // 268 30 4 (all ready sorted by burst time)
+
+            // cannot do anything, go to next process    
+
+
+            // Vector will finish before the next process
+            if((buffer.front().arrivalTime + buffer.front().CPU_BurstLength) <= p.arrivalTime){
+                currentTime = currentTime + p.CPU_BurstLength;
+                buffer.erase(buffer.begin());
+                numOfCompletedProcesses++;
+            } else {
+                if(){
+
+                }
+            }
         }
 
-        // Calculate response time
-        int responseTime = currentTime - p.arrivalTime;
-        totalResponseTime += responseTime;
 
-        // Calculate waiting time
-        int waitingTime = currentTime - p.arrivalTime;
-        totalWaitingTime += waitingTime;
+        
+        // // Wait for the next proccess if the current one has not arrived
+        // if(p.arrivalTime > currentTime) {
+        //     currentTime = p.arrivalTime;
+        // }
 
-        // Simulate the CPU's burst time
-        currentTime += p.CPU_BurstLength;
+        // // Calculate response time
+        // int responseTime = currentTime - p.arrivalTime;
+        // totalResponseTime += responseTime;
 
-        // Calculate turnaround time
-        int turnaroundTime = currentTime - p.arrivalTime;
-        totalTurnaroundTime += turnaroundTime;
+        // // Calculate waiting time
+        // int waitingTime = currentTime - p.arrivalTime;
+        // totalWaitingTime += waitingTime;
 
-        // Calculate total CPU burst time
-        totalCPUBurstTime += p.CPU_BurstLength;
+        // // Simulate the CPU's burst time
+        // currentTime += p.CPU_BurstLength;
 
-        // Increment the number of completed processes
-        numOfCompletedProcesses++;
+        // // Calculate turnaround time
+        // int turnaroundTime = currentTime - p.arrivalTime;
+        // totalTurnaroundTime += turnaroundTime;
 
-        // Exit the loop when 500 processes are completed
-        if(numOfCompletedProcesses >= 500){
-            break;
-        }
+        // // Calculate total CPU burst time
+        // totalCPUBurstTime += p.CPU_BurstLength;
+
+        // // Increment the number of completed processes
+        // numOfCompletedProcesses++;
+
+        // // Exit the loop when 500 processes are completed
+        // if(numOfCompletedProcesses >= 500){
+        //     break;
+        // }
     }
 
     // Set total elapsed time to what the current time is at the end of calculations
