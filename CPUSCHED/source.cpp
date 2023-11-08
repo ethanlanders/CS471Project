@@ -85,8 +85,10 @@ void calculations(vector<CPU_Process>& processes){
         // There are ___ processes in the vector
         else 
         { 
+            // Calculating Time Difference
             int diff = p.arrivalTime - currentTime;
 
+            // Updating buffer based off time difference
             for(CPU_Process b : buffer){
                 if(b.CPU_BurstLength >= diff){
                     b.CPU_BurstLength -= diff;
@@ -95,21 +97,16 @@ void calculations(vector<CPU_Process>& processes){
                 } else {
                     diff -= b.CPU_BurstLength;
                     b.CPU_BurstLength = 0;
-                }
-            }
-            
-            for(CPU_Process b : buffer){
-                if(b.CPU_BurstLength == 0){
-                    buffer.erase(b.begin());
-                    numOfCompletedProcesses++;
-                    // if(numOfCompletedProcesses == numOfProcesses){
-                    //     break;
-                    // }
-                } else {
-                    break;
-                }
+                    if(b.CPU_BurstLength == 0){
+                        buffer.erase(b.begin());
+                        numOfCompletedProcesses++;
+                        // if(numOfCompletedProcesses == numOfProcesses){
+                        //     break;
+                    }
+                } 
             }
 
+            // Updating totalIdleTime
             if(diff > 0){
                 totalIdleTime += diff;
             }
