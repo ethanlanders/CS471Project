@@ -74,13 +74,6 @@ void calculations(vector<CPU_Process>& processes){
     // 268 14 10
     // 268 30 4
 
-    // totalIdleTime == 10;
-    // Buffer:  {(10, 22, 1)}
-
-    // totalIdleTime == 10;
-    // currentTime == 
-    // Buffer:  {(10, 22, 1)}
-
     for(CPU_Process p : processes){
         // Buffer is Empty
         if(buffer.empty())
@@ -92,32 +85,56 @@ void calculations(vector<CPU_Process>& processes){
         // There are ___ processes in the vector
         else 
         { 
-            buffer.push_back(p);
+            int diff = p.arrivalTime - currentTime;
 
-            // sort buffer by burst for SJF
-
-            // update buffer processes (burst time)
-
-            // remove process in buffer if finished
-
-            // 223 8 3 (now finished)
-            // 268 14 10
-            // 266 16 2
-            // 268 30 4 (all ready sorted by burst time)
-
-            // cannot do anything, go to next process    
-
-
-            // Vector will finish before the next process
-            if((buffer.front().arrivalTime + buffer.front().CPU_BurstLength) <= p.arrivalTime){
-                currentTime = currentTime + p.CPU_BurstLength;
-                buffer.erase(buffer.begin());
-                numOfCompletedProcesses++;
-            } else {
-                if(){
-
+            for(CPU_Process b : buffer){
+                if(b.CPU_BurstLength >= diff){
+                    b.CPU_BurstLength -= diff;
+                    diff = 0;
+                    break;
+                } else {
+                    diff -= b.CPU_BurstLength;
+                    b.CPU_BurstLength = 0;
                 }
             }
+            
+            for(CPU_Process b : buffer){
+                if(b.CPU_BurstLength == 0){
+                    buffer.erase(b.begin());
+                    numOfCompletedProcesses++;
+                    // if(numOfCompletedProcesses == numOfProcesses){
+                    //     break;
+                    // }
+                } else {
+                    break;
+                }
+            }
+
+            if(diff > 0){
+                totalIdleTime += diff;
+            }
+
+            currentTime = p.arrivalTime;
+
+            buffer.push_back(p);
+
+            // ***sort buffer by burst for SJF.***
+            // sort(buffer.CPU_BurstLength)
+
+            // EVERYTHING BENEATH IN COMMENTS CAN BE REMOVED (most likely)
+
+            // // remove process in buffer if finished
+
+            // // Vector will finish before the next process
+            // if((buffer.front().arrivalTime + buffer.front().CPU_BurstLength) <= p.arrivalTime){
+            //     currentTime = currentTime + p.CPU_BurstLength;
+            //     buffer.erase(buffer.begin());
+            //     numOfCompletedProcesses++;
+            // } else {
+            //     if(){
+
+            //     }
+            // }
         }
 
 
