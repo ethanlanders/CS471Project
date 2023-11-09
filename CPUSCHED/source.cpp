@@ -4,7 +4,7 @@
 #include <fstream>
 #include <bits/stdc++.h>
 
-#define numOfProcesses 500
+#define numOfProcesses 50
 
 using namespace std;
 
@@ -152,6 +152,8 @@ void SJF(vector<CPU_Process> processes)
     for (CPU_Process p : processes)
     {
         num++;
+
+        cout << "P: " << num << " B: " << numOfCompletedProcesses << endl;
         // Buffer is Empty
         if (buffer.empty())
         {
@@ -159,34 +161,32 @@ void SJF(vector<CPU_Process> processes)
             currentTime = currentTime + (p.arrivalTime - currentTime);
             buffer.push_back(p);
         }
-        // There are ___ processes in the vector
         else
         {
             // Calculating Time Difference
             int diff = p.arrivalTime - currentTime;
 
-            cout << "P: " << num << " B: " << numOfCompletedProcesses << endl;
             // Updating buffer based off time difference
             for (CPU_Process b : buffer)
             {
+                cout << "\tBuffer Size: " << buffer.size() << endl;
                 // cout << "entered for loop looping on processes in buffer" << endl;
                 if (b.CPU_BurstLength >= diff)
                 {
                     b.CPU_BurstLength -= diff;
                     diff = 0;
-                    cout << "\tif statement complete" << endl;
+                    cout << "\tBuffer Item " << b.CPU_BurstLength << "" << endl;
                     break;
                 }
                 else
                 {
-                    cout << "\tentered else" << endl;
+                    cout << "\tCompleted Process" << endl;
                     diff -= b.CPU_BurstLength;
                     b.CPU_BurstLength = 0;
                     if (b.CPU_BurstLength == 0)
                     {
                         // cout << "Buffer process burst length == 0" << endl;
                         buffer.erase(buffer.begin());
-                        cout << "\tBuffer Size: " << buffer.size() << endl;
                         numOfCompletedProcesses++;
                         if (numOfCompletedProcesses >= numOfProcesses)
                         {
