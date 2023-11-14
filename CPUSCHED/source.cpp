@@ -54,7 +54,7 @@ void readData(vector<CPU_Process> &processes)
 }
 
 // Function to calculate and display statistics for CPU processes
-void calculations(int totalElapsedTime, int totalCPUBurstTime, int totalIdleTime, int totalWaitingTime,
+void calculations(int totalElapsedTime, int totalCPUBurstTime, int totalWaitingTime,
                   int totalResponseTime, int totalTurnaroundTime)
 {
 
@@ -80,32 +80,31 @@ void calculations(int totalElapsedTime, int totalCPUBurstTime, int totalIdleTime
 void FIFO(vector<CPU_Process> processes)
 {
     // Declare variables
-    int totalElapsedTime = 0;
+    int elapsedTime = 0;
     int numOfCompletedProcesses = 0;
     int totalCPUBurstTime = 0;
     int totalWaitingTime = 0;
     int totalTurnaroundTime = 0;
     int totalResponseTime = 0;
-    int currentTime = 0;
     int completionTime = 0;
 
     for (CPU_Process p : processes)
     {
         // Wait for the next proccess if the current one has not arrived
-        if (p.arrivalTime > currentTime)
+        if (p.arrivalTime > elapsedTime)
         {
-            currentTime = p.arrivalTime;
+            elapsedTime = p.arrivalTime;
         }
 
         // Calculate completion time (time when the procsses finishes executing)
         int completionTime = p.arrivalTime + p.CPU_BurstLength;
 
         // Calculate response time
-        int responseTime = currentTime - p.arrivalTime;
+        int responseTime = elapsedTime - p.arrivalTime;
         totalResponseTime += responseTime;
 
         // Simulate the CPU's burst time
-        currentTime += p.CPU_BurstLength;
+        elapsedTime += p.CPU_BurstLength;
 
         // Calculate turnaround time
         int turnaroundTime = completionTime - p.arrivalTime;
@@ -128,11 +127,8 @@ void FIFO(vector<CPU_Process> processes)
         }
     }
 
-    currentTime = totalElapsedTime;
-
     cout << "\nStatistics for FIFO Scheduling\n\n";
-    calculations(totalElapsedTime, totalCPUBurstTime, totalElapsedTime - totalCPUBurstTime,
-                 totalWaitingTime, totalResponseTime, totalTurnaroundTime);
+    calculations(elapsedTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
 }
 
 // Function to perform Shortest-Job First (SJF) Scheduling
