@@ -80,24 +80,36 @@ void calculations(int totalElapsedTime, int totalCPUBurstTime, int totalWaitingT
 void FIFO(vector<CPU_Process> processes)
 {
     // Declare variables
+
+    // Total time it takes to complete 500 proceeses
     int elapsedTime = 0;
+    // Local counter of number of completed processes
     int numOfCompletedProcesses = 0;
+    // Total amount of time CPU is working on a process
+    //      Idle time is elapsedTime - Burst time
     int totalCPUBurstTime = 0;
+    // Extra Time it takes for cpu to complete a process
+    //      Wait: (arrival + burst) - completed time
     int totalWaitingTime = 0;
+    // Durration between When a process arrives till its completion
     int totalTurnaroundTime = 0;
+    // Time it takes for cpu to intially start working on a process
     int totalResponseTime = 0;
-    int completionTime = 0;
 
     for (CPU_Process p : processes)
     {
         // Wait for the next proccess if the current one has not arrived
         if (p.arrivalTime > elapsedTime)
         {
+            totalCPUBurstTime += p.arrivalTime - elapsedTime;
             elapsedTime = p.arrivalTime;
         }
 
         // Calculate completion time (time when the procsses finishes executing)
-        int completionTime = p.arrivalTime + p.CPU_BurstLength;
+        elapsedTime = p.arrivalTime + p.CPU_BurstLength;
+        numOfCompletedProcesses++;
+        totalWaitingTime += (p.arrivalTime + p.CPU_BurstLength) - elapsedTime;
+        totalTurnaroundTime += elapsedTime - p.arrivalTime;
 
         // Calculate response time
         int responseTime = elapsedTime - p.arrivalTime;

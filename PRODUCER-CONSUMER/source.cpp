@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 
@@ -7,10 +6,6 @@
 #include <mutex>
 #include <condition_variable>
 #include <vector>
-
-// #include <random>
-// let me save please
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 using namespace std;
 bool ready = true; // Tell threads to run
@@ -113,9 +108,8 @@ void runThreads(int time)
 int main(int argc, char *argv[])
 {
     // Get CLI input
-    int time = 20;
-    int producerNum = 16;
-    int consumerNum = 1;
+    int producerNum = (int)argv[0];
+    int consumerNum = (int)argv[0];
 
     // Initialize Buffer
 
@@ -137,7 +131,7 @@ int main(int argc, char *argv[])
               << std::endl;
 
     /* Starts Threads */
-    timer = std::thread(runThreads, time);
+    timer = std::thread(runThreads, argv[2]);
 
     /* close producer threads */
     for (int id = 0; id < producerNum; id++)
