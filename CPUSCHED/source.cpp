@@ -87,6 +87,7 @@ void FIFO(vector<CPU_Process> processes)
     int totalTurnaroundTime = 0;
     int totalResponseTime = 0;
     int currentTime = 0;
+    int completionTime = 0;
 
     for (CPU_Process p : processes)
     {
@@ -96,20 +97,23 @@ void FIFO(vector<CPU_Process> processes)
             currentTime = p.arrivalTime;
         }
 
-        // Calculate response time (FIX THIS)
-        // int responseTime = currentTime - p.arrivalTime;
-        // totalResponseTime += responseTime;
+        // Calculate completion time (time when the procsses finishes executing)
+        int completionTime = p.arrivalTime + p.CPU_BurstLength;
 
-        // Calculate waiting time
-        int waitingTime = currentTime - p.arrivalTime;
-        totalWaitingTime += waitingTime;
+        // Calculate response time
+        int responseTime = currentTime - p.arrivalTime;
+        totalResponseTime += responseTime;
 
         // Simulate the CPU's burst time
         currentTime += p.CPU_BurstLength;
 
         // Calculate turnaround time
-        int turnaroundTime = currentTime - p.arrivalTime;
+        int turnaroundTime = completionTime - p.arrivalTime;
         totalTurnaroundTime += turnaroundTime;
+
+        // Calculate waiting time
+        int waitingTime = turnaroundTime - p.CPU_BurstLength;
+        totalWaitingTime += waitingTime;
 
         // Calculate total CPU burst time
         totalCPUBurstTime += p.CPU_BurstLength;
