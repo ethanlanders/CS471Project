@@ -118,14 +118,6 @@ void FIFO(vector<CPU_Process> processes)
         // Simulate the CPU's burst time
         elapsedTime += p.CPU_BurstLength;
 
-        // Calculate turnaround time
-        int turnaroundTime = completionTime - p.arrivalTime;
-        totalTurnaroundTime += turnaroundTime;
-
-        // Calculate waiting time
-        int waitingTime = turnaroundTime - p.CPU_BurstLength;
-        totalWaitingTime += waitingTime;
-
         // Calculate total CPU burst time
         totalCPUBurstTime += p.CPU_BurstLength;
 
@@ -205,7 +197,7 @@ void SJF(vector<CPU_Process> processes)
 
                             cout << "\tP: " << num << " B: " << numOfCompletedProcesses << endl;
                             cout << "\nStatistics for SJF Scheduling\n\n";
-                            calculations(totalElapsedTime, totalCPUBurstTime, totalIdleTime,
+                            calculations(totalElapsedTime, totalCPUBurstTime,
                                          totalWaitingTime, totalResponseTime, totalTurnaroundTime);
                             return;
                         }
