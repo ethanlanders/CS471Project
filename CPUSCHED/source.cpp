@@ -3,8 +3,8 @@
 #include <queue>
 #include <fstream>
 #include <bits/stdc++.h>
-
-#define numOfProcesses 50
+// Do not use hardcoded process count value
+#define numOfProcesses 541
 
 using namespace std;
 
@@ -20,6 +20,7 @@ struct CPU_Process
 // Function to read CPU process data from a file named "datafile.txt"
 void readData(vector<CPU_Process> &processes)
 {
+
     ifstream inFile;
     string firstLine;
     inFile.open("datafile.txt");
@@ -41,11 +42,13 @@ void readData(vector<CPU_Process> &processes)
         // Create a CPU_Process struct to push read in material to the processes vector
         CPU_Process p = {arrivalTime, CPU_BurstLength, priority};
         processes.push_back(p);
-        processCounter++;
+        processCounter++; // use this variable to access process count I cout this variable It is giving record 541 in line 51
     }
 
     // Close the input file after reading in
     inFile.close();
+
+    //cout<<"processCounter:" <<processCounter <<endl;
 
     // **Test to see if input was successful**
     // for (CPU_Process p : processes) {
@@ -59,7 +62,7 @@ void calculations(int totalElapsedTime, int totalCPUBurstTime, int totalWaitingT
 {
 
     // Calculate throughoutput (proccesses per unit of time) and CPU utilization
-    double throughput = static_cast<double>(numOfProcesses) / totalElapsedTime;
+    double throughput = static_cast<double>(numOfProcesses) / totalCPUBurstTime;
     double cpuUtilization = static_cast<double>(totalCPUBurstTime) / totalElapsedTime;
 
     // Display calculations
@@ -76,9 +79,17 @@ void calculations(int totalElapsedTime, int totalCPUBurstTime, int totalWaitingT
          << endl;
 }
 
+
+bool compareArrivalTime(const CPU_Process& p1, const CPU_Process& p2) {
+    return p1.arrivalTime < p2.arrivalTime;
+}
+
 // Function to perform First-In-First-Out (FIFO) Scheduling
 void FIFO(vector<CPU_Process> processes)
 {
+
+std::vector<CPU_Process> fifoProcess = processes;
+    std::sort(fifoProcess.begin(), fifoProcess.end(), compareArrivalTime);
     // Declare variables
 
     // Total time it takes to complete 500 proceeses
@@ -96,48 +107,67 @@ void FIFO(vector<CPU_Process> processes)
     // Time it takes for cpu to intially start working on a process
     int totalResponseTime = 0;
 
-    for (CPU_Process p : processes)
+    int currentTime = fifoProcess[0].arrivalTime;
+
+    for (CPU_Process p : fifoProcess)
     {
-        // Wait for the next proccess if the current one has not arrived
-        if (p.arrivalTime > elapsedTime)
-        {
-            totalCPUBurstTime += p.arrivalTime - elapsedTime;
-            elapsedTime = p.arrivalTime;
-        }
+//        // Wait for the next proccess if the current one has not arrived
+//        if (p.arrivalTime > elapsedTime) // there is no need to add this condition here
+//        {
+//            totalCPUBurstTime += p.arrivalTime - elapsedTime;
+//            elapsedTime = p.arrivalTime;
+//        }
+//
+//        // Calculate completion time (time when the procsses finishes executing)
+//        elapsedTime = p.arrivalTime + p.CPU_BurstLength;
+//        numOfCompletedProcesses++;
+//        totalWaitingTime += (p.arrivalTime + p.CPU_BurstLength) - elapsedTime;
+//        totalTurnaroundTime += elapsedTime - p.arrivalTime;
+//
+//        // Calculate response time
+//        int responseTime = elapsedTime - p.arrivalTime;
+//        totalResponseTime += responseTime;
+//
+//        // Simulate the CPU's burst time
+//        elapsedTime += p.CPU_BurstLength;
+//
+//        // Calculate total CPU burst time
+//        totalCPUBurstTime += p.CPU_BurstLength;
+//
+//        // Increment the number of completed processes
+//        numOfCompletedProcesses++;
+//
+//        // Exit the loop when 500 processes are completed
+//        if (numOfCompletedProcesses >= 500)
+//        {
+//            break;
+//        }
 
-        // Calculate completion time (time when the procsses finishes executing)
-        elapsedTime = p.arrivalTime + p.CPU_BurstLength;
-        numOfCompletedProcesses++;
-        totalWaitingTime += (p.arrivalTime + p.CPU_BurstLength) - elapsedTime;
-        totalTurnaroundTime += elapsedTime - p.arrivalTime;
 
-        // Calculate response time
-        int responseTime = elapsedTime - p.arrivalTime;
-        totalResponseTime += responseTime;
 
-        // Simulate the CPU's burst time
-        elapsedTime += p.CPU_BurstLength;
+        int startTime = std::max(currentTime, p.arrivalTime);
+        int endTime = startTime + p.CPU_BurstLength;
 
-        // Calculate total CPU burst time
+        totalWaitingTime += startTime - p.arrivalTime;
+        totalTurnaroundTime += endTime - p.arrivalTime;
+        totalResponseTime += startTime - p.arrivalTime;
         totalCPUBurstTime += p.CPU_BurstLength;
 
-        // Increment the number of completed processes
-        numOfCompletedProcesses++;
+        currentTime = endTime;
 
-        // Exit the loop when 500 processes are completed
-        if (numOfCompletedProcesses >= 500)
-        {
-            break;
-        }
+
     }
 
     cout << "\nStatistics for FIFO Scheduling\n\n";
-    calculations(elapsedTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
+    calculations(currentTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
 }
 
 // Function to perform Shortest-Job First (SJF) Scheduling
 void SJF(vector<CPU_Process> processes)
 {
+    std::vector<CPU_Process> sjfProcess = processes;
+    std::sort(sjfProcess.begin(), sjfProcess.end(), compareArrivalTime);
+
     // Declare variables
     int totalElapsedTime = 0;
     int numOfCompletedProcesses = 0;
@@ -145,80 +175,123 @@ void SJF(vector<CPU_Process> processes)
     int totalWaitingTime = 0;
     int totalTurnaroundTime = 0;
     int totalResponseTime = 0;
-    int currentTime = 0;
+//    int currentTime = 0;
     int totalIdleTime = 0;
 
-    vector<CPU_Process> buffer;
+    int currentTime = sjfProcess[0].arrivalTime;
 
-    cout << processes.size() << endl;
+    std::vector<int> readyIndices;
+    int currentIndex = 0; // Keep track of the current process index
 
-    int num = 0;
-    for (CPU_Process p : processes)
-    {
-        num++;
-
-        cout << "P: " << num << " B: " << numOfCompletedProcesses << endl;
-        // Buffer is Empty
-        if (buffer.empty())
-        {
-            totalIdleTime = totalIdleTime + p.arrivalTime - currentTime;
-            currentTime = currentTime + (p.arrivalTime - currentTime);
-            buffer.push_back(p);
+    while (currentIndex < numOfProcesses || !readyIndices.empty()) {
+        while (currentIndex < numOfProcesses && sjfProcess[currentIndex].arrivalTime <= currentTime) {
+            readyIndices.push_back(currentIndex);
+            currentIndex++;
         }
-        else
-        {
-            // Calculating Time Difference
-            int diff = p.arrivalTime - currentTime;
 
-            // Updating buffer based off time difference
-            for (CPU_Process b : buffer)
-            {
-                cout << "\tBuffer Size: " << buffer.size() << endl;
-                // cout << "entered for loop looping on processes in buffer" << endl;
-                if (b.CPU_BurstLength >= diff)
-                {
-                    b.CPU_BurstLength -= diff;
-                    diff = 0;
-                    cout << "\tBuffer Item " << b.CPU_BurstLength << "" << endl;
-                    break;
-                }
-                else
-                {
-                    cout << "\tCompleted Process" << endl;
-                    diff -= b.CPU_BurstLength;
-                    b.CPU_BurstLength = 0;
-                    if (b.CPU_BurstLength == 0)
-                    {
-                        // cout << "Buffer process burst length == 0" << endl;
-                        buffer.erase(buffer.begin());
-                        numOfCompletedProcesses++;
-                        if (numOfCompletedProcesses >= numOfProcesses)
-                        {
-
-                            cout << "\tP: " << num << " B: " << numOfCompletedProcesses << endl;
-                            cout << "\nStatistics for SJF Scheduling\n\n";
-                            calculations(totalElapsedTime, totalCPUBurstTime,
-                                         totalWaitingTime, totalResponseTime, totalTurnaroundTime);
-                            return;
-                        }
-                    }
-                }
-            }
-
-            // Updating totalIdleTime
-            if (diff > 0)
-            {
-                totalIdleTime += diff;
-            }
-
-            currentTime = p.arrivalTime;
-
-            buffer.push_back(p);
-
-            // ***sort buffer by burst for SJF.***
-            // sort(buffer.CPU_BurstLength);
+        if (readyIndices.empty()) {
+            currentTime = sjfProcess[currentIndex].arrivalTime;
+            continue;
         }
+
+        std::sort(readyIndices.begin(), readyIndices.end(), [&](int a, int b) {
+            return sjfProcess[a].CPU_BurstLength < sjfProcess[b].CPU_BurstLength;
+        });
+
+        int shortestJobIndex = readyIndices[0];
+        CPU_Process currentProcess = sjfProcess[shortestJobIndex];
+        readyIndices.erase(readyIndices.begin());
+
+        int startTime = currentTime;
+        int endTime = currentTime + currentProcess.CPU_BurstLength;
+
+        totalWaitingTime += startTime - currentProcess.arrivalTime;
+        totalTurnaroundTime += endTime - currentProcess.arrivalTime;
+        totalResponseTime += startTime - currentProcess.arrivalTime;
+        totalCPUBurstTime += currentProcess.CPU_BurstLength;
+
+        currentTime = endTime;
     }
+
+
+    cout << "\nStatistics for SJF Scheduling\n\n";
+    calculations(currentTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
+
+
+//    vector<CPU_Process> buffer;
+//
+//    cout << processes.size() << endl;
+//
+//    int num = 0;
+//    for (CPU_Process p : processes)
+//    {
+//        num++;
+//
+//        cout << "P: " << num << " B: " << numOfCompletedProcesses << endl;
+//        // Buffer is Empty
+//        if (buffer.empty())
+//        {
+//            totalIdleTime = totalIdleTime + p.arrivalTime - currentTime;
+//            currentTime = currentTime + (p.arrivalTime - currentTime);
+//            buffer.push_back(p);
+//        }
+//        else
+//        {
+//            // Calculating Time Difference
+//            int diff = p.arrivalTime - currentTime;
+//
+//            // Updating buffer based off time difference
+//            for (CPU_Process b : buffer)
+//            {
+//                cout << "\tBuffer Size: " << buffer.size() << endl;
+//                // cout << "entered for loop looping on processes in buffer" << endl;
+//                if (b.CPU_BurstLength >= diff)
+//                {
+//                    b.CPU_BurstLength -= diff;
+//                    diff = 0;
+//                    cout << "\tBuffer Item " << b.CPU_BurstLength << "" << endl;
+//                    break;
+//                }
+//                else
+//                {
+//                    cout << "\tCompleted Process" << endl;
+//                    diff -= b.CPU_BurstLength;
+//                    b.CPU_BurstLength = 0;
+//                    if (b.CPU_BurstLength == 0)
+//                    {
+//                        // cout << "Buffer process burst length == 0" << endl;
+//                        buffer.erase(buffer.begin());
+//                        numOfCompletedProcesses++;
+//                        if (numOfCompletedProcesses >= numOfProcesses)
+//                        {
+//
+//                            cout << "\tP: " << num << " B: " << numOfCompletedProcesses << endl;
+//                            cout << "\nStatistics for SJF Scheduling\n\n";
+//                            calculations(totalElapsedTime, totalCPUBurstTime,
+//                                         totalWaitingTime, totalResponseTime, totalTurnaroundTime);
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//
+//            // Updating totalIdleTime
+//            if (diff > 0)
+//            {
+//                totalIdleTime += diff;
+//            }
+//
+//            currentTime = p.arrivalTime;
+//
+//            buffer.push_back(p); // why you are adding in the buffer at the end?
+//
+//
+//
+//
+//            // ***sort buffer by burst for SJF.***
+//            // sort(buffer.CPU_BurstLength);
+//        }
+//    }
 }
 
 // Function to perform Preemptive Priority Scheduling
@@ -239,13 +312,13 @@ int main()
     readData(processes);
 
     // Perform FIFO CPU scheduling
-    FIFO(processes);
+//    FIFO(processes);
 
     // Perform SJF CPU scheduling
     SJF(processes);
 
     // Perform Preemptive Priority Scheduling
-    preemptivePriority(processes);
+//    preemptivePriority(processes);
 
     return 0;
 }
