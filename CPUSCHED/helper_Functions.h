@@ -11,13 +11,13 @@ struct CPU_Process
     int responseTime = 0;
 };
 
-bool compareArrivalTime(const CPU_Process &p1, const CPU_Process &p2)
+inline bool compareArrivalTime(const CPU_Process &p1, const CPU_Process &p2)
 {
     return p1.arrivalTime < p2.arrivalTime;
 }
 
 // Function to calculate and display statistics for CPU processes
-void calculations(int numOfProcesses, int totalElapsedTime, int totalCPUBurstTime, int totalWaitingTime,
+inline void calculations(int numOfProcesses, int totalElapsedTime, int totalCPUBurstTime, int totalWaitingTime,
                   int totalResponseTime, int totalTurnaroundTime)
 {
 

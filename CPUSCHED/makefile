@@ -5,8 +5,8 @@ INPUT = datafile.txt
 
 all: $(TARGET)
 
-$(TARGET): $(TARGET).cpp
-	$(CC) $(TARGET).cpp -o $(TARGET)
+$(TARGET): $(TARGET).cpp FIFO.cpp
+	$(CC) $(TARGET).cpp FIFO.cpp -o $(TARGET)
 
 clean:
 	rm $(TARGET)

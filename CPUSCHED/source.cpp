@@ -201,7 +201,7 @@ int main()
     readData(processes);
 
     // Perform FIFO CPU scheduling
-    //    FIFO(processes);
+    FIFO(processes);
 
     // Perform SJF CPU scheduling
     SJF(processes);
