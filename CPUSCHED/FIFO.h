@@ -3,7 +3,12 @@
 
 #include <vector>
 
-bool compareArrivalTime(const CPU_Process& p1, const CPU_Process& p2);
+#include <algorithm>
+#include <iostream>
+#include "helper_Functions.h"
+
+using namespace std;
+
 void FIFO(std::vector<CPU_Process> processes);
 
 #endif // FIFO_H
