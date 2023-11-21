@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// Define a structure to represent a CPU process
+// Define a structure to represent a CPU process 
 struct CPU_Process
 {
     int arrivalTime;
