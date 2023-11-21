@@ -1,3 +1,6 @@
+#ifndef HELPER_FUNCTIONS_H
+#define HELPER_FUNCTIONS_H
+
 #include <string>
 #include <iostream>
 
@@ -38,3 +41,5 @@ inline void calculations(int numOfProcesses, int totalElapsedTime, int totalCPUB
          << endl
          << endl;
 }
+
+#endif
