@@ -7,9 +7,7 @@
 
 using namespace std;
 
-// Define a structure to represent a CPU process
-
-// #include "helper_Functions.h"
+#include "readData.h"
 #include "FIFO.h"
 #include "SJF.h"
 #include "preemptive.h"
