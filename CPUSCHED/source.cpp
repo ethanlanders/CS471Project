@@ -12,6 +12,7 @@ using namespace std;
 // #include "helper_Functions.h"
 #include "FIFO.h"
 #include "SJF.h"
+#include "preemptive.h"
 
 // Function to read CPU process data from a file named "datafile.txt"
 void readData(vector<CPU_Process> &processes)
@@ -52,15 +53,6 @@ void readData(vector<CPU_Process> &processes)
     // }
 }
 
-// Function to perform Preemptive Priority Scheduling
-void preemptivePriority(vector<CPU_Process> &processes)
-{
-
-    cout << "\nStatistics for Preemptive Priority Scheduling\n\n";
-    // calculations(totalElapsedTime, totalCPUBurstTime, totalIdleTime,
-    //              totalWaitingTime, totalResponseTime, totalTurnaroundTime);
-}
-
 int main()
 {
     // Declare needed variables
@@ -76,7 +68,7 @@ int main()
     SJF(processes);
 
     // Perform Preemptive Priority Scheduling
-    //    preemptivePriority(processes);
+    preemptivePriority(processes);
 
     return 0;
 }
