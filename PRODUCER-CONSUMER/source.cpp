@@ -108,8 +108,8 @@ void runThreads(int time)
 int main(int argc, char *argv[])
 {
     // Get CLI input
-    int producerNum = (int)argv[0];
-    int consumerNum = (int)argv[0];
+    int producerNum = 5; //(int)argv[0];
+    int consumerNum = 5; //(int)argv[0];
 
     // Initialize Buffer
 
@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
               << std::endl;
 
     /* Starts Threads */
-    timer = std::thread(runThreads, argv[2]);
+    timer = std::thread(runThreads, 5); // argv[2]);
 
     /* close producer threads */
     for (int id = 0; id < producerNum; id++)
