@@ -3,24 +3,27 @@
 // Function to perform First-In-First-Out (FIFO) Scheduling
 void FIFO(std::vector<CPU_Process> processes)
 {
-
     std::vector<CPU_Process> fifoProcess = processes;
     std::sort(fifoProcess.begin(), fifoProcess.end(), compareArrivalTime);
 
-    // Declare variables
+    /*  Declare variables   */
 
+    // Number of processes we are working with contained within datafile.txt
     int numOfProcesses = 541;
-    // Local counter of number of completed processes
+    
+    // Local variable for the number of completed processes
     int numOfCompletedProcesses = 0;
+
     // Total amount of time CPU is working on a process
-    //      Idle time is elapsedTime - Burst time
     int totalCPUBurstTime = 0;
-    // Extra Time it takes for cpu to complete a process
-    //      Wait: (arrival + burst) - completed time
+    
+    // The extra time it takes for the CPU to complete a process
     int totalWaitingTime = 0;
-    // Durration between When a process arrives till its completion
+    
+    // Time between when a process arrives and when it completes
     int totalTurnaroundTime = 0;
-    // Time it takes for cpu to intially start working on a process
+    
+    // Time it takes for the CPU to intially start working on a process
     int totalResponseTime = 0;
 
     int currentTime = fifoProcess[0].arrivalTime;

@@ -6,11 +6,21 @@ void SJF(vector<CPU_Process> processes)
     std::vector<CPU_Process> sjfProcess = processes;
     std::sort(sjfProcess.begin(), sjfProcess.end(), compareArrivalTime);
 
-    // Declare variables 
+    /*  Declare variables   */
+
+    // Number of processes we are working with contained within datafile.txt
     int numOfProcesses = 541;
+
+    // Total amount of time CPU is working on a process
     int totalCPUBurstTime = 0;
+    
+    // The extra time it takes for the CPU to complete a process
     int totalWaitingTime = 0;
+    
+    // Time between when a process arrives and when it completes
     int totalTurnaroundTime = 0;
+    
+    // Time it takes for the CPU to intially start working on a process
     int totalResponseTime = 0;
 
     int currentTime = sjfProcess[0].arrivalTime;
