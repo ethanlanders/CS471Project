@@ -7,7 +7,6 @@
 
 using namespace std;
 
-#include "readData.h"
 #include "FIFO.h"
 #include "SJF.h"
 #include "preemptive.h"
@@ -59,14 +58,23 @@ int main()
     // Read process data from the input file, save to vector of processes
     readData(processes);
 
-    // Perform FIFO CPU scheduling
+    // Perform FIFO CPU scheduling and write output to FIFO.txt
+    std::ofstream fifoFile("FIFO.txt");
+    std::cout.rdbuf(fifoFile.rdbuf());  // Redirect cout to the file
     FIFO(processes);
+    fifoFile.close();  // Close the file
 
-    // Perform SJF CPU scheduling
+    // Perform SJF CPU scheduling and write output to SJF.txt
+    std::ofstream sjfFile("SJF.txt");
+    std::cout.rdbuf(sjfFile.rdbuf());  // Redirect cout to the file
     SJF(processes);
+    sjfFile.close();  // Close the file
 
-    // Perform Preemptive Priority Scheduling
+    // Perform preemptive priority CPU scheduling and write output to preemptive.txt
+    std::ofstream preemptiveFile("preemptive.txt");
+    std::cout.rdbuf(preemptiveFile.rdbuf());  // Redirect cout to the file
     preemptivePriority(processes);
+    preemptiveFile.close();  // Close the file
 
     return 0;
 }

@@ -6,15 +6,12 @@ void SJF(vector<CPU_Process> processes)
     std::vector<CPU_Process> sjfProcess = processes;
     std::sort(sjfProcess.begin(), sjfProcess.end(), compareArrivalTime);
 
-    // Declare variables
-    int totalElapsedTime = 0;
-    int numOfCompletedProcesses = 0;
+    // Declare variables 
+    int numOfProcesses = 541;
     int totalCPUBurstTime = 0;
     int totalWaitingTime = 0;
     int totalTurnaroundTime = 0;
     int totalResponseTime = 0;
-    //    int currentTime = 0;
-    int totalIdleTime = 0;
 
     int currentTime = sjfProcess[0].arrivalTime;
 
@@ -53,8 +50,8 @@ void SJF(vector<CPU_Process> processes)
         currentTime = endTime;
     }
 
-    cout << "\nStatistics for SJF Scheduling\n\n";
-    calculations(numOfCompletedProcesses, currentTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
+    cout << "Statistics for SJF Scheduling\n\n";
+    calculations(numOfProcesses, currentTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
 
     //    vector<CPU_Process> buffer;
     //

@@ -37,9 +37,7 @@ inline void calculations(int numOfProcesses, int totalElapsedTime, int totalCPUB
     cout << "CPU utilization: " << cpuUtilization << endl;
     cout << "Average waiting time (in CPU burst times): " << static_cast<double>(totalWaitingTime) / numOfProcesses << endl;
     cout << "Average turnaround time (in CPU burst times): " << static_cast<double>(totalTurnaroundTime) / numOfProcesses << endl;
-    cout << "Average response time (in CPU burst times): " << static_cast<double>(totalResponseTime) / numOfProcesses << endl
-         << endl
-         << endl;
+    cout << "Average response time (in CPU burst times): " << static_cast<double>(totalResponseTime) / numOfProcesses;
 }
 
 #endif
