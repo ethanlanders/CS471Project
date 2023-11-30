@@ -20,34 +20,20 @@ input-6sec-wait.txt
 ################################################################################
 #   Running the Program
 
-################################################################################
-#   
-################################################################################
+#   Can be ran using the 'make test' command to use the 3 input files to generate the 3 output files below. 
 
 ################################################################################
-#   
-################################################################################
+#   Output
+
+#   Will create 3 output text files based off the time of the input file
+output-2sec-wait.txt
+output-4sec-wait.txt
+output-6sec-wait.txt
 
 ################################################################################
-#   
-################################################################################
+#   Result summary and explanation
 
-################################################################################
-#   
-################################################################################
+#   The files generated will be influenced by their input files providing different times to run, number of producers, and number of consumers.
+#   The more consumers there are, the higher the turnaround time will be up to a point. The consumers can only consume as much as the producers produce so having enough consumers to balance and to consume what the producers produce will influence the turnaround time. 
 
-################################################################################
-#   
-################################################################################
-To compile code:
-    make
-
-To run code:
-    make test
-
-To clean build:
-    make clean
-
-
-This follows the description in pages 253-257 of the 9th edition of the textbook. Develop the producer-consumer problem using Pthreads or Winn32 API or using any other library of your preference. You can code the program in any language of your choice. Test the program with several inputs (the three parameters to the main program are shown in the textbook). Definitely, test the following parameters. Try with different sleep times. Measure the performance of the time in terms of overall turnaround time. Tabulate your
-results along with the parameters used. Finally, summarize your results and give an explanation for the results.
+#   This follows the description in pages 253-257 of the 9th edition of the textbook.
