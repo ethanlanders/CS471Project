@@ -3,13 +3,15 @@
 // Function to perform Shortest-Job First (SJF) Scheduling
 void SJF(vector<CPU_Process> processes)
 {
+    // Hold a copy of the processes
     std::vector<CPU_Process> sjfProcess = processes;
+
     std::sort(sjfProcess.begin(), sjfProcess.end(), compareArrivalTime);
 
     /*  Declare variables   */
 
     // Number of processes we are working with contained within datafile.txt
-    int numOfProcesses = 541;
+    int numOfProcesses = 0;
 
     // Total amount of time CPU is working on a process
     int totalCPUBurstTime = 0;
@@ -25,12 +27,15 @@ void SJF(vector<CPU_Process> processes)
 
     int currentTime = sjfProcess[0].arrivalTime;
 
+    // Vector that holds the integer index to the processes that need to be completed
     std::vector<int> readyIndices;
+
     int currentIndex = 0; // Keep track of the current process index
 
     while (currentIndex < processes.size() || !readyIndices.empty())
     {
         // Add processes to the buffer based on arrival time
+        // Asking where are we in this scheduling scheme?
         while (currentIndex < processes.size() && sjfProcess[currentIndex].arrivalTime <= currentTime)
         {
             readyIndices.push_back(currentIndex);
@@ -49,10 +54,10 @@ void SJF(vector<CPU_Process> processes)
         // Sort the buffer based on CPU burst length of processes in SJF scheduling
         std::sort(readyIndices.begin(), readyIndices.end(), [&](int a, int b)
                 { 
-                    if (sjfProcess[a].CPU_BurstLength == sjfProcess[b].CPU_BurstLength) {
-                        // If CPU burst lengths are equal, prioritize by arrival order
-                        return sjfProcess[a].arrivalTime < sjfProcess[b].arrivalTime;
-                    }
+                    // if (sjfProcess[a].CPU_BurstLength == sjfProcess[b].CPU_BurstLength) {
+                    //     // If CPU burst lengths are equal, prioritize by arrival order
+                    //     return sjfProcess[a].arrivalTime < sjfProcess[b].arrivalTime;
+                    // }
                     return sjfProcess[a].CPU_BurstLength < sjfProcess[b].CPU_BurstLength;
                 });
 
@@ -67,7 +72,9 @@ void SJF(vector<CPU_Process> processes)
         totalWaitingTime += startTime - currentProcess.arrivalTime;
         totalTurnaroundTime += endTime - currentProcess.arrivalTime;
         totalResponseTime += startTime - currentProcess.arrivalTime;
-        totalCPUBurstTime += currentProcess.CPU_BurstLength;
+        totalCPUBurstTime += currentProcess.CPU_BurstLength; // add idle time
+
+        numOfProcesses++;
 
         currentTime = endTime;
     }
