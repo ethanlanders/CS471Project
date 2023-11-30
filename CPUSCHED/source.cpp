@@ -19,7 +19,7 @@ void readData(vector<CPU_Process> &processes)
     string firstLine;
     inFile.open("datafile.txt");
 
-    // if statement to determine if input file successfully opened
+    // if statement to determine if input file successfully opened 
     if (!inFile)
     {
         cerr << "Error opening datafile.txt" << endl;
