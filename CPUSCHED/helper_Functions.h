@@ -11,7 +11,7 @@ struct CPU_Process
     int arrivalTime;
     int CPU_BurstLength;
     int priority;
-    int responseTime = 0;
+    bool responseTime = 0;
 };
 
 inline bool compareArrivalTime(const CPU_Process &p1, const CPU_Process &p2)

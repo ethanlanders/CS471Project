@@ -8,11 +8,8 @@ void FIFO(std::vector<CPU_Process> processes)
 
     /*  Declare variables   */
 
-    // Number of processes we are working with contained within datafile.txt
-    int numOfProcesses = 541;
-    
-    // Local variable for the number of completed processes
-    int numOfCompletedProcesses = 0;
+    // Number of processes we are working with
+    int numOfProcesses = 0;
 
     // Total amount of time CPU is working on a process
     int totalCPUBurstTime = 0;
@@ -37,11 +34,11 @@ void FIFO(std::vector<CPU_Process> processes)
         totalTurnaroundTime += endTime - p.arrivalTime;
         totalResponseTime += startTime - p.arrivalTime;
         totalCPUBurstTime += p.CPU_BurstLength;
-        numOfCompletedProcesses++;
+        numOfProcesses++;
 
         currentTime = endTime;
     }
 
     cout << "Statistics for FIFO Scheduling\n\n";
-    calculations(numOfCompletedProcesses, currentTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
+    calculations(numOfProcesses, currentTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
 }

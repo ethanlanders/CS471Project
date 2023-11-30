@@ -30,20 +30,32 @@ void SJF(vector<CPU_Process> processes)
 
     while (currentIndex < processes.size() || !readyIndices.empty())
     {
+        // Add processes to the buffer based on arrival time
         while (currentIndex < processes.size() && sjfProcess[currentIndex].arrivalTime <= currentTime)
         {
             readyIndices.push_back(currentIndex);
             currentIndex++;
         }
 
+        // The buffer is empty when no processes are ready to execute.  
+        // If that is the case, then update currentTime with the next 
+        // processes's arrival time.  The loop continues afterwards.
         if (readyIndices.empty())
         {
             currentTime = sjfProcess[currentIndex].arrivalTime;
             continue;
         }
 
+        // Sort the buffer based on CPU burst length of processes in SJF scheduling
         std::sort(readyIndices.begin(), readyIndices.end(), [&](int a, int b)
-                  { return sjfProcess[a].CPU_BurstLength < sjfProcess[b].CPU_BurstLength; });
+                { 
+                    if (sjfProcess[a].CPU_BurstLength == sjfProcess[b].CPU_BurstLength) {
+                        // If CPU burst lengths are equal, prioritize by arrival order
+                        return sjfProcess[a].arrivalTime < sjfProcess[b].arrivalTime;
+                    }
+                    return sjfProcess[a].CPU_BurstLength < sjfProcess[b].CPU_BurstLength;
+                });
+
 
         int shortestJobIndex = readyIndices[0];
         CPU_Process currentProcess = sjfProcess[shortestJobIndex];
