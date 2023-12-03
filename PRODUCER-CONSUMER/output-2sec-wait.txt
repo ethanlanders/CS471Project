@@ -1,0 +1,255 @@
+
+Running: 2 1 1
+Consumer Error: Empty Buffer
+Producer produced 15
+Consumer consumed 15
+
+Running: 2 4 1
+Producer produced 21
+Producer produced 27
+Producer produced 59
+Consumer consumed 21
+Producer produced 26
+Producer produced 40
+Producer produced 26
+Producer Error: Full buffer
+
+Running: 2 16 1
+Producer produced 56
+Producer produced 93
+Producer produced 29
+Producer produced 19
+Producer produced 73
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Consumer consumed 93
+Producer produced 91
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+
+Running: 2 1 2
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Producer produced 24
+
+Running: 2 4 2
+Producer produced 64
+Producer produced 43
+Producer produced 8
+Producer produced 78
+Consumer consumed 64
+Producer produced 3
+Producer produced 51
+Consumer consumed 43
+Producer produced 54
+Producer Error: Full buffer
+Consumer consumed 8
+
+Running: 2 16 2
+Producer produced 17
+Producer produced 92
+Producer produced 1
+Producer produced 86
+Producer produced 65
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Consumer consumed 17
+Producer produced 56
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Consumer consumed 92
+Producer produced 32
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+
+Running: 2 1 4
+Consumer Error: Empty Buffer
+Producer produced 96
+Consumer consumed 96
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Producer produced 45
+Consumer consumed 45
+Consumer Error: Empty Buffer
+
+Running: 2 4 4
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Producer produced 50
+Consumer consumed 50
+Consumer Error: Empty Buffer
+Producer produced 24
+Consumer consumed 24
+Producer produced 87
+Producer produced 56
+Producer produced 43
+Consumer consumed 87
+Consumer consumed 56
+Consumer consumed 43
+Producer produced 91
+
+Running: 2 16 4
+Consumer Error: Empty Buffer
+Producer produced 28
+Producer produced 11
+Producer produced 4
+Producer produced 63
+Producer produced 38
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Consumer consumed 11
+Producer produced 96
+Producer Error: Full buffer
+Consumer consumed 28
+Producer produced 43
+Consumer consumed 4
+Producer produced 70
+Consumer consumed 63
+Producer produced 83
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+Producer Error: Full buffer
+
+Running: 2 1 16
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Producer produced 61
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer consumed 61
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+
+Running: 2 4 16
+Consumer Error: Empty Buffer
+Producer produced 79
+Consumer consumed 79
+Producer produced 50
+Consumer consumed 50
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Producer produced 73
+Producer produced 96
+Producer produced 59
+Producer produced 13
+Consumer consumed 96
+Consumer consumed 73
+Consumer consumed 59
+Consumer consumed 13
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+
+Running: 2 16 16
+Producer produced 55
+Producer produced 99
+Producer produced 4
+Consumer consumed 55
+Producer produced 21
+Consumer consumed 99
+Consumer consumed 21
+Consumer consumed 4
+Producer produced 50
+Consumer consumed 50
+Producer produced 58
+Consumer Error: Empty Buffer
+Producer produced 24
+Consumer consumed 24
+Producer produced 72
+Producer produced 30
+Consumer consumed 30
+Producer produced 85
+Consumer consumed 72
+Producer produced 40
+Consumer consumed 85
+Consumer consumed 40
+Consumer Error: Empty Buffer
+Producer produced 42
+Consumer consumed 42
+Producer produced 98
+Producer produced 13
+Consumer consumed 98
+Consumer consumed 13
+Producer produced 98
+Consumer consumed 98
+Consumer Error: Empty Buffer
+Consumer Error: Empty Buffer
+Consumer consumed 90
+Consumer Error: Empty Buffer
+Producer produced 24
+Consumer consumed 24
+Producer produced 90
+Producer produced 9
+Producer produced 81
+Consumer consumed 90
+Producer produced 19
+Producer produced 36
+Producer produced 32
+Producer Error: Full buffer
+Consumer consumed 9
+Consumer consumed 81
+Consumer consumed 19

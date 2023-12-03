@@ -6,7 +6,7 @@ INPUT = datafile.txt
 all: $(TARGET)
 
 $(TARGET): $(TARGET).cpp
-	make clean ; $(CC) $(TARGET).cpp -o $(TARGET) -lpthread
+	make clean ; $(CC) $(TARGET).cpp threads.h -o $(TARGET) -lpthread
 
 clean:
 	rm $(TARGET)
