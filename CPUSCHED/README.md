@@ -41,7 +41,7 @@ Average response time (in CPU burst times): ________
 ```
 
 ## Result Summary and Explanation
-**Disclaimer:** We met with the professor prior to completing this projet, and she stated that we should handle the whole input file instead of a specific number of processes, which is what the rubric states. 
+**Disclaimer:** We met with the professor prior to completing this project, and she stated that we should handle the whole input file instead of a specific number of processes, which is what the rubric states. 
 
 The average waiting time and response time values were similar for SJF as well as for FIFO. On the other hand, priority had a higher average waiting time in comparison to its average response time. 
 
