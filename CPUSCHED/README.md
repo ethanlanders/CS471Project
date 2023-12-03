@@ -19,7 +19,7 @@ The program can be compiled in Terminal by:
 ## Running the Program
 The program can be run in Terminal by:
 - Going to the CPUSCHED folder using the 'cd' command
-- Running the command 'make test'
+- Running the command 'make test' or './source'
 
 ## Output
 The output files have the following structure: "Output-[Scheduling Type].txt", such as:
@@ -50,5 +50,3 @@ The average turnaround time is the longest with the priority scheduler (71.63 CP
 The average waiting time is the longest with the priority scheduler (50.26 CPU burst lengths), then the FIFO scheduler (41.66 CPU burst lengths), and then the SJF scheduler (29.60 CPU burst lengths).
 
 Due to handling all 541 processes in the data file, the total elapsed time is the same for all three functions at 15688.  The throughput for each scheduling algorithm is the same at 0.0467912 as well as for CPU utilziation at 0.736996.
-
-With a limit of 500 processes (following the rubric), the results are more varied:
