@@ -32,24 +32,44 @@ void SJF(vector<CPU_Process> processes)
 
     int currentIndex = 0; // Keep track of the current process index
 
+    int idleTime = 0;
+    
+    // While we have not scheduled every process in datafile or the buffer contains processes... work on processes
     while (currentIndex < processes.size() || !readyIndices.empty())
     {
-        // Add processes to the buffer based on arrival time
-        // Asking where are we in this scheduling scheme?
+        // The buffer is empty when no processes are ready to execute.  
+        // If that is the case, then update currentTime with the next 
+        // processes's arrival time.  The loop continues afterwards.
+        if (readyIndices.empty())
+        {
+            idleTime += sjfProcess[currentIndex].arrivalTime - currentTime;
+            currentTime = sjfProcess[currentIndex].arrivalTime;
+            continue;
+        }
+
+        // While we have not scheduled everything 
+        // and the current index's process's arrival time is less than the current time...
+        // add processes to the buffer
+        // so... if there are two processes with the same arrival time, save one to the buffer.
+        // currentTime == 98
+        // Sjf current index == 1
+        // sjfProcess[currentIndex].arrivalTime == 68
+        // now... readyIndices contains '1'
+        // currentIndex == 2 now...
+        // 98 == 98 now
+        // add index '2' to readyIndices
+        // currentIndex == 3 now...
+        // continue doing this until
         while (currentIndex < processes.size() && sjfProcess[currentIndex].arrivalTime <= currentTime)
         {
             readyIndices.push_back(currentIndex);
             currentIndex++;
         }
 
-        // The buffer is empty when no processes are ready to execute.  
-        // If that is the case, then update currentTime with the next 
-        // processes's arrival time.  The loop continues afterwards.
-        if (readyIndices.empty())
-        {
-            currentTime = sjfProcess[currentIndex].arrivalTime;
-            continue;
-        }
+        // 268 14 10
+        // 266 18 2
+        // *268 30 4    currentTime = 268
+        // 296 10 7
 
         // Sort the buffer based on CPU burst length of processes in SJF scheduling
         std::sort(readyIndices.begin(), readyIndices.end(), [&](int a, int b)
@@ -61,6 +81,11 @@ void SJF(vector<CPU_Process> processes)
                     return sjfProcess[a].CPU_BurstLength < sjfProcess[b].CPU_BurstLength;
                 });
 
+        // Have we worked with this process?
+        if(!readyIndices.begin().responseTime){
+            readyIndices.begin().responseTime = true;
+            // add math for response time
+        }
 
         int shortestJobIndex = readyIndices[0];
         CPU_Process currentProcess = sjfProcess[shortestJobIndex];
@@ -68,12 +93,13 @@ void SJF(vector<CPU_Process> processes)
 
         int startTime = currentTime;
         int endTime = currentTime + currentProcess.CPU_BurstLength;
+        
+        // Response time – amount of time from when a request was submitted until the first response is produced. 
+        totalResponseTime += startTime - currentProcess.arrivalTime;
 
         totalWaitingTime += startTime - currentProcess.arrivalTime;
         totalTurnaroundTime += endTime - currentProcess.arrivalTime;
-        totalResponseTime += startTime - currentProcess.arrivalTime;
         totalCPUBurstTime += currentProcess.CPU_BurstLength; // add idle time
-
         numOfProcesses++;
 
         currentTime = endTime;
