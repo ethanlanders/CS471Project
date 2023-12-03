@@ -41,12 +41,14 @@ Average response time (in CPU burst times): ________
 ```
 
 ## Result's summary and explanation
-As seen by the output results for all three scheduling algorithms, the average waiting time have similar values to the average response time.  The average turnaround time is the longest with fifo scheduler (______ CPU burst lengths), then the priority scheduler, and then the SJF scheduler has the shortest at ______.
+**Disclaimer:** We met with the professor prior to completing this projet, and she stated that we should handle the whole input file instead of a specific number of processes, which is what the rubric states. 
 
-The average waiting time is close in values for the fifo and priority scheduler with both around ______ CPU burst units while the SJF has a relatively short waiting time at ______ units. The SJF scheduler gives priority to processes that require less time to complete meaning by executing shorter jobs first, it reduces the average waiting time of processes in the ready queue which is why it has the shortest average waiting time amongst the three schedulers.
+The average waiting time and response time values were similar for SJF as well as for FIFO. On the other hand, priority had a higher average waiting time in comparison to its average response time. 
 
-The throughput and CPU utilization also have similar values for all three since they are calculated using the same equations:
+The average turnaround time is the longest with the priority scheduler (71.63 CPU burst lengths), then the SJF scheduler (63.03 CPU burst lengths), and then the FIFO scheduler (50.97 CPU burst lengths).
 
-**Throughput** = total number of processes/total elapsed time
+The average waiting time is the longest with the priority scheduler (50.26 CPU burst lengths), then the FIFO scheduler (41.66 CPU burst lengths), and then the SJF scheduler (29.60 CPU burst lengths).
 
-**CPU utilization** = total burst time/total elapsed time
+Due to handling all 541 processes in the data file, the total elapsed time is the same for all three functions at 15688.  The throughput for each scheduling algorithm is the same at 0.0467912 as well as for CPU utilziation at 0.736996.
+
+With a limit of 500 processes (following the rubric), the results are more varied:
