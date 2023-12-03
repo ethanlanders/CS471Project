@@ -12,9 +12,9 @@ Using the producer-consumer problem from the class textbook as a basis, the prog
 Each line of the input files contain the wait time, producer thread count, consumer thread count.
 
 Three input files are provided:
-`input-2sec-wait.txt`
-`input-4sec-wait.txt`
-`input-6sec-wait.txt`
+- `input-2sec-wait.txt`
+- `input-4sec-wait.txt`
+- `input-6sec-wait.txt`
 
 ##   Compiling
 The program can be compiled using the 'make' command from the PRODUCER-CONSUMER directory.
@@ -24,9 +24,9 @@ The program can be run using the 'make test' command from the PRODUCER-CONSUMER 
 
 ##   Output
 The program will create three output text files based off the time of the input file:
-`output-2sec-wait.txt`
-`output-4sec-wait.txt`
-`output-6sec-wait.txt`
+- `output-2sec-wait.txt`
+- `output-4sec-wait.txt`
+- `output-6sec-wait.txt`
 
 ##   Result summary and explanation
 The files generated will be influenced by their input files providing different times to run, number of producers, and number of consumers.

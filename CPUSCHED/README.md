@@ -23,9 +23,9 @@ The program can be run in Terminal by:
 
 ## Output
 The output files have the following structure: "Output-[Scheduling Type].txt", such as:
-`Output-FIFOScheduling.txt`
-`Output-PriorityScheduling.txt`
-`Output-SJFScheduling.txt`
+- `Output-FIFOScheduling.txt`
+- `Output-PriorityScheduling.txt`
+- `Output-SJFScheduling.txt`
 
 Each output file will have the following format and content:
 ```
