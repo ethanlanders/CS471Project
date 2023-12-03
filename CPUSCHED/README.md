@@ -11,12 +11,12 @@ This program will act as a CPU scheduler and handle scheduling 541 simulated pro
 ## Input file
 The program takes an input text file titled "datafile.txt" that contains 541 processes with three columns: "Arrival time", "CPU burst length", and "priority".
 
-## Compiling the program
+## Compiling the Program
 The program can be compiled in Terminal by:
 - Going to the CPUSCHED folder using the 'cd' command
 - Running the command 'make'
 
-## Running the program
+## Running the Program
 The program can be run in Terminal by:
 - Going to the CPUSCHED folder using the 'cd' command
 - Running the command 'make test'
@@ -40,7 +40,7 @@ Average turnaround time (in CPU burst times): ________
 Average response time (in CPU burst times): ________
 ```
 
-## Result's summary and explanation
+## Result Summary and Explanation
 **Disclaimer:** We met with the professor prior to completing this projet, and she stated that we should handle the whole input file instead of a specific number of processes, which is what the rubric states. 
 
 The average waiting time and response time values were similar for SJF as well as for FIFO. On the other hand, priority had a higher average waiting time in comparison to its average response time. 

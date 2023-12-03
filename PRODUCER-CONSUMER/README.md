@@ -28,7 +28,7 @@ The program will create three output text files based off the time of the input 
 - `output-4sec-wait.txt`
 - `output-6sec-wait.txt`
 
-##   Result summary and explanation
+##   Result Summary and Explanation
 The files generated will be influenced by their input files providing different times to run, number of producers, and number of consumers.
 
 The more consumers there are, the higher the turnaround time will be up to a point. The consumers can only consume as much as the producers produce so having enough consumers to balance and to consume what the producers produce will influence the turnaround time. 
