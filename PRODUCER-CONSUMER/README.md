@@ -1,39 +1,36 @@
-################################################################################
-#   Problem 2: Producer-Consumer Problem
-#   Authors: Charles Milroy, Ethan Landers
+# Problem 2: Producer-Consumer
+CS471, Old Dominion University, Fall 2023
 
-#   Description: Using the producer-consumer problem from the class textbook as a basis, the program is written in C++ and uses threads. Taking input files which contain wait time, producer threads, and number of consumer threads to generate output to a file. 
+##  Authors
+Ethan Landers<br>
+Charles Milroy
 
-################################################################################
-#   Input Files: Each line contains Wait time, producer thread count, consumer thread count
+## Description
+Using the producer-consumer problem from the class textbook as a basis, the program is written in C++ and uses threads. Taking input files which contain wait time, producer threads, and number of consumer threads to generate output to a file. 
 
-#   Three input files are provided:
-input-2sec-wait.txt
-input-4sec-wait.txt
-input-6sec-wait.txt
+## Input Files:
+Each line of the input files contain the wait time, producer thread count, consumer thread count.
 
-################################################################################
-#   Compiling
+Three input files are provided:
+- `input-2sec-wait.txt`
+- `input-4sec-wait.txt`
+- `input-6sec-wait.txt`
 
-#   Can be compiled using the 'make' command.
+##   Compiling
+The program can be compiled using the 'make' command from the PRODUCER-CONSUMER directory.
 
-################################################################################
-#   Running the Program
+##   Running the Program
+The program can be run using the 'make test' command from the PRODUCER-CONSUMER directory to use the three input files to generate the three output files discussed below. 
 
-#   Can be ran using the 'make test' command to use the 3 input files to generate the 3 output files below. 
+##   Output
+The program will create three output text files based off the time of the input file:
+- `output-2sec-wait.txt`
+- `output-4sec-wait.txt`
+- `output-6sec-wait.txt`
 
-################################################################################
-#   Output
+##   Result summary and explanation
+The files generated will be influenced by their input files providing different times to run, number of producers, and number of consumers.
 
-#   Will create 3 output text files based off the time of the input file
-output-2sec-wait.txt
-output-4sec-wait.txt
-output-6sec-wait.txt
+The more consumers there are, the higher the turnaround time will be up to a point. The consumers can only consume as much as the producers produce so having enough consumers to balance and to consume what the producers produce will influence the turnaround time. 
 
-################################################################################
-#   Result summary and explanation
-
-#   The files generated will be influenced by their input files providing different times to run, number of producers, and number of consumers.
-#   The more consumers there are, the higher the turnaround time will be up to a point. The consumers can only consume as much as the producers produce so having enough consumers to balance and to consume what the producers produce will influence the turnaround time. 
-
-#   This follows the description in pages 253-257 of the 9th edition of the textbook.
+This follows the description on pages 253 through 257 of the 9th edition of our textbook "Operating System Concepts" by Silberschatz, Galvin, and Gagne.
