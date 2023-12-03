@@ -1,4 +1,4 @@
-Statistics for Preemptive Priority Scheduling
+Statistics for SJF Scheduling
 
 Number of processes: 541
 Total elapsed time (for the scheduler): 15688

@@ -96,6 +96,6 @@ void SJF(vector<CPU_Process> processes)
     }
 
     int totalCPUBurstTime = currentTime - idleTime;
-    std::cout << "Statistics for Preemptive Priority Scheduling\n\n";
+    std::cout << "Statistics for SJF Scheduling\n\n";
     calculations(numOfProcesses, currentTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
 }
