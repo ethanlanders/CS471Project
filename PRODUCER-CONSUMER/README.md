@@ -16,19 +16,19 @@ Three input files are provided:
 - `input-4sec-wait.txt`
 - `input-6sec-wait.txt`
 
-##   Compiling
+## Compiling
 The program can be compiled using the 'make' command from the PRODUCER-CONSUMER directory.
 
-##   Running the Program
+## Running the Program
 The program can be run using the 'make test' command from the PRODUCER-CONSUMER directory to use the three input files to generate the three output files discussed below. 
 
-##   Output
+## Output
 The program will create three output text files based off the time of the input file:
 - `output-2sec-wait.txt`
 - `output-4sec-wait.txt`
 - `output-6sec-wait.txt`
 
-##   Result Summary and Explanation
+## Result Summary and Explanation
 The files generated will be influenced by their input files providing different times to run, number of producers, and number of consumers.
 
 The more consumers there are, the higher the turnaround time will be up to a point. The consumers can only consume as much as the producers produce so having enough consumers to balance and to consume what the producers produce will influence the turnaround time. 
