@@ -1,26 +1,33 @@
-# Project Problem 1
+################################################################################
+# Project Problem 1:  CPU Scheduling
 CS471, Old Dominion University, Fall 2023
 
+################################################################################
 ## Authors
 Ethan Landers
 Charles Milroy
 
+################################################################################
 ## Description
 This program will act as a CPU scheduler and handle scheduling 541 simulated processes using these scheduling algorithms: FIFO, SJF without preemption, Priority with preemption.
 
+################################################################################
 ## Input file
 The program takes an input text file titled "datafile.txt" that contains 541 processes with three columns: "Arrival time", "CPU burst length", and "priority".
 
+################################################################################
 ## Compiling the program
 The program can be compiled in Terminal by:
 - Going to the CPUSCHED folder using the 'cd' command
 - Running the command 'make'
 
+################################################################################
 ## Running the program
 The program can be run in Terminal by:
 - Going to the CPUSCHED folder using the 'cd' command
 - Running the command 'make test'
 
+################################################################################
 ## Output
 The output files have the following structure: "Output-[Scheduling Type].txt", such as:
 - Output-FIFOScheduling.txt
@@ -39,6 +46,7 @@ Average turnaround time (in CPU burst times): ________
 Average response time (in CPU burst times): ________
 ```
 
+################################################################################
 ## Result's summary and explanation
 As seen by the output results for all three scheduling algorithms, the average waiting time have similar values to the average response time.  The average turnaround time is the longest with fifo scheduler (______ CPU burst lengths), then the priority scheduler, and then the SJF scheduler has the shortest at ______.
 
