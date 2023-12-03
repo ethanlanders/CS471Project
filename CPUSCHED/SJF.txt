@@ -1,0 +1,9 @@
+Statistics for Preemptive Priority Scheduling
+
+Number of processes: 541
+Total elapsed time (for the scheduler): 15688
+Throughput (Number of processes executed in one unit of CPU burst time): 0.0467912
+CPU utilization: 0.736996
+Average waiting time (in CPU burst times): 29.6007
+Average turnaround time (in CPU burst times): 50.9723
+Average response time (in CPU burst times): 27.244

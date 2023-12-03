@@ -13,13 +13,13 @@ void FIFO(std::vector<CPU_Process> processes)
 
     // Total amount of time CPU is working on a process
     int totalCPUBurstTime = 0;
-    
+
     // The extra time it takes for the CPU to complete a process
     int totalWaitingTime = 0;
-    
+
     // Time between when a process arrives and when it completes
     int totalTurnaroundTime = 0;
-    
+
     // Time it takes for the CPU to intially start working on a process
     int totalResponseTime = 0;
 

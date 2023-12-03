@@ -3,66 +3,97 @@
 // Function to perform Preemptive Priority Scheduling
 void preemptivePriority(vector<CPU_Process> &processes)
 {
+    // Hold a copy of the processes
     std::vector<CPU_Process> sjfProcess = processes;
+
+    // Ensures Vector of Processes is in order of arrival
     std::sort(sjfProcess.begin(), sjfProcess.end(), compareArrivalTime);
 
     /*  Declare variables   */
+    int numOfProcesses = 0;      // Number of Completed Processes
+    int totalWaitingTime = 0;    // The extra time it takes for the CPU to complete a process
+    int totalTurnaroundTime = 0; // Time between when a process arrives and when it completes
+    int totalResponseTime = 0;   // Time it takes for the CPU to intially start working on a process
+    int currentTime = 0;         // Starting Time;
+    int idleTime = 0;            // To calculate CPUBurstTime
 
-    // Number of processes we are working with contained within datafile.txt
-    int numOfProcesses = 541;
-    
-    // Local variable for the number of completed processes
-    int numOfCompletedProcesses = 0;
-
-    // Total amount of time CPU is working on a process
-    int totalCPUBurstTime = 0;
-    
-    // The extra time it takes for the CPU to complete a process
-    int totalWaitingTime = 0;
-    
-    // Time between when a process arrives and when it completes
-    int totalTurnaroundTime = 0;
-    
-    // Time it takes for the CPU to intially start working on a process
-    int totalResponseTime = 0;
-
-    int currentTime = sjfProcess[0].arrivalTime;
-
+    // Vector that holds the integer index to the processes that need to be completed
     std::vector<int> readyIndices;
     int currentIndex = 0; // Keep track of the current process index
 
+    // While we have not scheduled every process in datafile or the buffer contains processes... work on processes
     while (currentIndex < processes.size() || !readyIndices.empty())
     {
+        // Account for Idle time when buffer is empty until next process
+        if (readyIndices.empty())
+        {
+            idleTime += sjfProcess[currentIndex].arrivalTime - currentTime;
+            currentTime = sjfProcess[currentIndex].arrivalTime;
+        }
+
+        // Add Processes to index Buffer up to CurrentTime
         while (currentIndex < processes.size() && sjfProcess[currentIndex].arrivalTime <= currentTime)
         {
             readyIndices.push_back(currentIndex);
             currentIndex++;
         }
 
-        if (readyIndices.empty())
-        {
-            currentTime = sjfProcess[currentIndex].arrivalTime;
-            continue;
-        }
-
+        // Sort the buffer based on Priority of processes in Preemptive scheduling
         std::sort(readyIndices.begin(), readyIndices.end(), [&](int a, int b)
                   { return sjfProcess[a].priority < sjfProcess[b].priority; });
 
-        int shortestJobIndex = readyIndices[0];
-        CPU_Process currentProcess = sjfProcess[shortestJobIndex];
-        readyIndices.erase(readyIndices.begin());
+        // CPU has time till next process arrives to work on current processes
+        int timeTillNextProcess = sjfProcess[currentIndex].arrivalTime - currentTime;
 
-        int startTime = currentTime;
-        int endTime = currentTime + currentProcess.CPU_BurstLength;
+        vector<int> temp = readyIndices; // Temporary list to properly remove indexes from list
+        // While there are processes to work on in buffer
+        for (int i = 0; i < readyIndices.size(); i++)
+        {
+            // While there is time to work on a process
+            if (currentIndex == processes.size() || timeTillNextProcess > 0)
+            {
+                // Check to see if we have worked on the process at all, calculate totalResponse Time if we have not
+                if (!sjfProcess[readyIndices[i]].responseTime)
+                {
+                    totalResponseTime += currentTime - sjfProcess[readyIndices[i]].arrivalTime;
+                    sjfProcess[readyIndices[i]].responseTime = true;
+                }
 
-        totalWaitingTime += startTime - currentProcess.arrivalTime;
-        totalTurnaroundTime += endTime - currentProcess.arrivalTime;
-        totalResponseTime += startTime - currentProcess.arrivalTime;
-        totalCPUBurstTime += currentProcess.CPU_BurstLength;
+                // Not enough time to finish process, update CPU_BurstLength
+                if (currentIndex < processes.size() && sjfProcess[readyIndices[i]].CPU_BurstLength > timeTillNextProcess)
+                {
+                    sjfProcess[readyIndices[i]].CPU_BurstLength -= timeTillNextProcess;
+                    currentTime += timeTillNextProcess;
+                    break;
+                }
+                else
+                { // Can finish process, calculate variables
+                    timeTillNextProcess -= sjfProcess[readyIndices[i]].CPU_BurstLength;
+                    currentTime += sjfProcess[readyIndices[i]].CPU_BurstLength;
+                    numOfProcesses++;
 
-        currentTime = endTime;
+                    totalWaitingTime += currentTime - (processes[readyIndices[i]].arrivalTime + processes[readyIndices[i]].CPU_BurstLength);
+                    totalTurnaroundTime += currentTime - processes[readyIndices[i]].arrivalTime;
+
+                    sjfProcess[readyIndices[i]].CPU_BurstLength = 0;
+                    temp[i] = 0;
+                }
+            }
+            else // No more time to work on processes
+            {
+                break;
+            }
+        }
+
+        // Removing completed processes and update ReadyIndicies
+        while (!temp.empty() && temp.front() == 0)
+        {
+            temp.erase(temp.begin());
+        }
+        readyIndices = temp;
     }
 
-    cout << "Statistics for Preemptive Priority Scheduling\n\n";
+    int totalCPUBurstTime = currentTime - idleTime;
+    std::cout << "Statistics for Preemptive Priority Scheduling\n\n";
     calculations(numOfProcesses, currentTime, totalCPUBurstTime, totalWaitingTime, totalResponseTime, totalTurnaroundTime);
 }

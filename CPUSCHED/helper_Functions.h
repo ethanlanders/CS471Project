@@ -21,7 +21,7 @@ inline bool compareArrivalTime(const CPU_Process &p1, const CPU_Process &p2)
 
 // Function to calculate and display statistics for CPU processes
 inline void calculations(int numOfProcesses, int totalElapsedTime, int totalCPUBurstTime, int totalWaitingTime,
-                  int totalResponseTime, int totalTurnaroundTime)
+                         int totalResponseTime, int totalTurnaroundTime)
 {
 
     // Calculate throughoutput (proccesses per unit of time) and CPU utilization

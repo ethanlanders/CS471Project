@@ -60,21 +60,19 @@ int main()
 
     // Perform FIFO CPU scheduling and write output to FIFO.txt
     std::ofstream fifoFile("FIFO.txt");
-    // std::cout.rdbuf(fifoFile.rdbuf());  // Redirect cout to the file
+    std::cout.rdbuf(fifoFile.rdbuf()); // Redirect cout to the file
     FIFO(processes);
     fifoFile.close(); // Close the file
 
     // Perform SJF CPU scheduling and write output to SJF.txt
     std::ofstream sjfFile("SJF.txt");
-    // std::cout.rdbuf(sjfFile.rdbuf());  // Redirect cout to the file
+    std::cout.rdbuf(sjfFile.rdbuf()); // Redirect cout to the file
     SJF(processes);
-
-    cout << "\n~~~Made it past SFJ\n";
     sjfFile.close(); // Close the file
 
     // Perform preemptive priority CPU scheduling and write output to preemptive.txt
     std::ofstream preemptiveFile("preemptive.txt");
-    // std::cout.rdbuf(preemptiveFile.rdbuf());  // Redirect cout to the file
+    std::cout.rdbuf(preemptiveFile.rdbuf()); // Redirect cout to the file
     preemptivePriority(processes);
     preemptiveFile.close(); // Close the file
 
