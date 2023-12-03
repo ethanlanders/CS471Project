@@ -1,17 +1,13 @@
-################################################################################
 # Problem 2: Producer-Consumer
 CS471, Old Dominion University, Fall 2023
 
-################################################################################
 ##  Authors
 Ethan Landers
 Charles Milroy
 
-################################################################################
 ## Description
 Using the producer-consumer problem from the class textbook as a basis, the program is written in C++ and uses threads. Taking input files which contain wait time, producer threads, and number of consumer threads to generate output to a file. 
 
-################################################################################
 ## Input Files:
 Each line of the input files contain the wait time, producer thread count, consumer thread count.
 
@@ -20,22 +16,18 @@ Three input files are provided:
 - input-4sec-wait.txt
 - input-6sec-wait.txt
 
-################################################################################
 ##   Compiling
 The program can be compiled using the 'make' command from the PRODUCER-CONSUMER directory.
 
-################################################################################
 ##   Running the Program
 The program can be run using the 'make test' command from the PRODUCER-CONSUMER directory to use the three input files to generate the three output files discussed below. 
 
-################################################################################
 ##   Output
 The program will create three output text files based off the time of the input file:
 - output-2sec-wait.txt
 - output-4sec-wait.txt
 - output-6sec-wait.txt
 
-################################################################################
 ##   Result summary and explanation
 The files generated will be influenced by their input files providing different times to run, number of producers, and number of consumers.
 
