@@ -14,12 +14,13 @@ The program takes an input text file titled "datafile.txt" that contains 541 pro
 ## Compiling the Program
 The program can be compiled in Terminal by:
 - Going to the CPUSCHED folder using the 'cd' command
-- Running the command 'make'
+- Running the command 'make' will result in this:
+`g++ source.cpp FIFO.cpp SJF.cpp preemptive.cpp helper_Functions.h -o source`
 
 ## Running the Program
 The program can be run in Terminal by:
 - Going to the CPUSCHED folder using the 'cd' command
-- Running the command 'make test' or './source'
+- Running the command 'make test' will output `./source datafile.txt` in the console and generate three files in output.
 
 ## Output
 The output files have the following structure: "Output-[Scheduling Type].txt", such as:
