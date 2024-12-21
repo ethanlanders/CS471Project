@@ -10,3 +10,5 @@ This repository contains solutions to two programming problems completed for the
   * See `PRODUCER-CONSUMER/README.md` for detailed instructions and explanations.
 
 For each problem, you will find relevant input files, instructions for compilation and execution, and output analysis.
+
+[Watch a video overview of the project here.](https://www.youtube.com/watch?v=MF5aDcGZ3pQ)
