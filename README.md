@@ -4,9 +4,9 @@ This repository contains solutions to two programming problems completed for the
 
 ## Project Structure:
 
-* CPUSCHED: Implements CPU scheduling algorithms (FIFO, SJF, and Priority Scheduling).
-  * See CPUSCHED/README.md for detailed instructions and explanations.
-* PRODUCER-CONSUMER: Implements the Producer-Consumer problem using threads in C++.
-  * See PRODUCER-CONSUMER/README.md for detailed instructions and explanations.
+* **CPUSCHED**: Implements CPU scheduling algorithms (FIFO, SJF, and Priority Scheduling).
+  * See `CPUSCHED/README.md` for detailed instructions and explanations.
+* **PRODUCER-CONSUMER**: Implements the Producer-Consumer problem using threads in C++.
+  * See `PRODUCER-CONSUMER/README.md` for detailed instructions and explanations.
 
 For each problem, you will find relevant input files, instructions for compilation and execution, and output analysis.
